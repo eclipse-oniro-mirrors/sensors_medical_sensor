@@ -1,0 +1,37 @@
+{
+  "subsystem": "sensors",
+  "parts": {
+    "medical_sensor": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "module_list": [
+        "//base/sensors/medical_sensor/interfaces/native:medical_ndk_target",
+        "//base/sensors/medical_sensor/interfaces/plugin:medical_js_target",
+        "//base/sensors/medical_sensor/frameworks/native/medical_sensor:medical_native_target",
+        "//base/sensors/medical_sensor/services/medical_sensor:medical_service_target",
+        "//base/sensors/medical_sensor/utils:medical_utils_target",
+        "//base/sensors/medical_sensor/sa_profile:medical_sa_profiles"
+      ],
+      "inner_kits": [
+        {
+          "header": {
+            "header_files": [
+              "medical_native_type.h",
+              "medical_native_impl.h"
+            ],
+            "header_base": "//base/sensors/medical_sensor/interfaces/native/include"
+          },
+          "name": "//base/sensors/medical_sensor/interfaces/native:medical_interface_native"
+        }
+      ],
+      "test_list": [
+        "//base/sensors/medical_sensor/frameworks/native/medical_sensor/test:unittest",
+        "//base/sensors/medical_sensor/interfaces/native/test:unittest",
+        "//base/sensors/medical_sensor/interfaces/plugin/test/unittest:unittest",
+        "//base/sensors/medical_sensor/services/medical_sensor/test:unittest"
+      ]
+    }
+  }
+}
