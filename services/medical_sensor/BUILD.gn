@@ -43,20 +43,17 @@ ohos_shared_library("libmedical_service") {
   deps = [
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
     "//drivers/peripheral/sensor/hal:hdi_sensor",
-    "//utils/native/base:utils",
   ]
 
   external_deps = [
-    "aafwk_standard:base",
-    "aafwk_standard:intent",
-    "appexecfwk_standard:appexecfwk_base",
-    "appexecfwk_standard:appexecfwk_core",
     "hisysevent_native:libhisysevent",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "permission_standard:libpermissionsdk_standard",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
+#    "sensor_device_driver:libsensor_proxy_1.0",
+    "utils_base:utils",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

@@ -179,7 +179,6 @@ ErrCode MedicalSensorServiceImpl::Register(RecordDataCallback cb) const
         return ERR_INVALID_VALUE;
     }
     int32_t ret = sensorInterface_->Register(SENSORS_HEALTH, cb);
-    //int32_t ret = sensorInterface_->Register(HEALTH_TYPE_MAXID, cb);
     if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s failed", __func__);
         return ERR_INVALID_VALUE;
@@ -213,8 +212,7 @@ ErrCode MedicalSensorServiceImpl::Unregister(void) const
         return ERR_INVALID_VALUE;
     }
 
-    int32_t ret = sensorInterface_->Unregister(SENSORS_HEALTH);
-    //int32_t ret = sensorInterface_->Unregister(HEALTH_TYPE_MAXID);
+    int32_t ret = sensorInterface_->Unregister(SENSORS_HEALTH, NULL);
     if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s failed", __func__);
         return ERR_INVALID_VALUE;
