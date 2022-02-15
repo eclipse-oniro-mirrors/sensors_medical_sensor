@@ -42,7 +42,6 @@ ohos_shared_library("libmedical_service") {
 
   deps = [
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
-    "//drivers/peripheral/sensor/hal:hdi_sensor",
   ]
 
   external_deps = [
@@ -52,8 +51,8 @@ ohos_shared_library("libmedical_service") {
     "permission_standard:libpermissionsdk_standard",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
-#    "sensor_device_driver:libsensor_proxy_1.0",
     "utils_base:utils",
+    "sensor_device_driver:hdi_sensor"
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

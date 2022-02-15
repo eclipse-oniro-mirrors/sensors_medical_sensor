@@ -36,7 +36,6 @@ ohos_shared_library("libmedical_native") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//drivers/peripheral/sensor/interfaces/include",
     "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
     "//foundation/appexecfwk/standard/libs/test/moduletest/common/event_handler",
     "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
@@ -44,10 +43,6 @@ ohos_shared_library("libmedical_native") {
   deps = [
     "$SUBSYSTEM_DIR/services/medical_sensor:libmedical_service",
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
-    "//drivers/peripheral/sensor/hal:hdi_sensor",
-    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
-    "//foundation/appexecfwk/standard/libs/libeventhandler:libeventhandler_target",
-    "//utils/native/base:utils",
   ]
 
   external_deps = [
@@ -55,6 +50,8 @@ ohos_shared_library("libmedical_native") {
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
+    "utils_base:utils",
+    "eventhandler:libeventhandler",
   ]
 
   part_name = "medical_sensor"

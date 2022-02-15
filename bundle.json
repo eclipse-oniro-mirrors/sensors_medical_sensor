@@ -1,12 +1,36 @@
 {
-  "subsystem": "sensors",
-  "parts": {
-    "medical_sensor": {
-      "variants": [
-        "phone",
-        "wearable"
+  "name": "@ohos/medical_sensor",
+  "description": "Obtaining sensor data",
+  "version": "3.1",
+  "license": "Apache License 2.0",
+  "segment": {
+    "destPath": "base/sensors/medical_sensor"
+  },
+  "component": {
+    "name": "medical_sensor",
+    "subsystem": "sensors",
+    "syscap": ["SystemCapability.Sensors.Medical_sensor"],
+    "features": [],
+    "adapted_system_type": [ "standard" ],
+    "rom": "2048KB",
+    "ram": "~4096KB",
+    "deps": {
+      "components": [
+        "hiviewdfx_hilog_native",
+        "ipc",
+        "safwk",
+        "samgr_standard",
+        "utils_base",
+        "appexecfwk_standard",
+        "permission_standard",
+        "napi",
+        "hisysevent_native",
+        "sensor_device_driver"
       ],
-      "module_list": [
+      "third_party": []
+    },
+    "build": {
+      "sub_component": [
         "//base/sensors/medical_sensor/interfaces/native:medical_ndk_target",
         "//base/sensors/medical_sensor/interfaces/plugin:medical_js_target",
         "//base/sensors/medical_sensor/frameworks/native/medical_sensor:medical_native_target",
@@ -16,17 +40,17 @@
       ],
       "inner_kits": [
         {
+          "name": "//base/sensors/medical_sensor/interfaces/native:medical_interface_native",
           "header": {
             "header_files": [
               "medical_native_type.h",
               "medical_native_impl.h"
             ],
             "header_base": "//base/sensors/medical_sensor/interfaces/native/include"
-          },
-          "name": "//base/sensors/medical_sensor/interfaces/native:medical_interface_native"
+          }
         }
       ],
-      "test_list": [
+      "test": [
         "//base/sensors/medical_sensor/frameworks/native/medical_sensor/test:unittest",
         "//base/sensors/medical_sensor/interfaces/native/test:unittest",
         "//base/sensors/medical_sensor/interfaces/plugin/test/unittest:unittest",
