@@ -41,12 +41,12 @@ ohos_shared_library("medical_interface_native") {
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor:libmedical_native",
     "$SUBSYSTEM_DIR/interfaces/native:libmedical_ndk",
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
-    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
-    "//utils/native/base:utils",
   ]
   external_deps = [
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
+    "utils_base:utils",
+    "eventhandler:libeventhandler",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

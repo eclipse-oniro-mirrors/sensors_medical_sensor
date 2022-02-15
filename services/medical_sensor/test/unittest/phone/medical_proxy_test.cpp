@@ -65,7 +65,7 @@ void AfeProxyTest::SetUp()
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     auto systemAbilityManager = SystemAbilityManagerClient::GetInstance().GetSystemAbilityManager();
     ASSERT_NE(systemAbilityManager, nullptr);
-    afeProxy_ = iface_cast<IMedicalSensorService>(systemAbilityManager->GetSystemAbility(AFE_SERVICE_ABILITY_ID));
+    afeProxy_ = iface_cast<IMedicalSensorService>(systemAbilityManager->GetSystemAbility(MEDICAL_SENSOR_SERVICE_ABILITY_ID));
     ASSERT_NE(afeProxy_, nullptr);
     afes_ = afeProxy_->GetSensorList();
     ASSERT_NE(afes_.size(), 0UL);
