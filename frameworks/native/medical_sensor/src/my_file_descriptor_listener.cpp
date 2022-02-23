@@ -26,7 +26,7 @@ using namespace OHOS::HiviewDFX;
 using namespace OHOS::AppExecFwk;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "MyFileDescriptorListener" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MyFileDescriptorListener" };
 constexpr int32_t RECEIVE_DATA_SIZE = 100;
 }  // namespace
 

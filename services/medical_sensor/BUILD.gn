@@ -16,6 +16,11 @@ import("//build/ohos.gni")
 SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
 ohos_shared_library("libmedical_service") {
   sources = [
+    "hdi_connection/adapter/src/compatible_connection.cpp",
+    "hdi_connection/adapter/src/hdi_connection.cpp",
+    "hdi_connection/adapter/src/sensor_event_callback.cpp",
+    "hdi_connection/hardware/src/hdi_service_impl.cpp",
+    "hdi_connection/interface/src/sensor_hdi_connection.cpp",
     "src/client_info.cpp",
     "src/fifo_cache_data.cpp",
     "src/flush_info_record.cpp",
@@ -23,7 +28,6 @@ ohos_shared_library("libmedical_service") {
     "src/medical_dump.cpp",
     "src/medical_manager.cpp",
     "src/medical_service.cpp",
-    "src/medical_service_impl.cpp",
     "src/medical_service_stub.cpp",
   ]
 
@@ -36,6 +40,9 @@ ohos_shared_library("libmedical_service") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "//drivers/peripheral/sensor/interfaces/include",
+    "hdi_connection/interface/include",
+    "hdi_connection/adapter/include",
+    "hdi_connection/hardware/include",
   ]
 
   cflags = [ "-Wno-error=inconsistent-missing-override" ]
@@ -52,7 +59,7 @@ ohos_shared_library("libmedical_service") {
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
     "utils_base:utils",
-    "sensor_device_driver:hdi_sensor"
+    "sensor_device_driver:libsensor_proxy_1.0",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

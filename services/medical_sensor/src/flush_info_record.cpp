@@ -23,7 +23,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "FlushInfoRecord" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "FlushInfoRecord" };
 constexpr int32_t CHANNEL_NO_FLUSH = -1;
 enum {
     FLUSH = 0,
@@ -99,7 +99,7 @@ int32_t FlushInfoRecord::GetFlushChannelIndex(const std::vector<struct FlushInfo
 ErrCode FlushInfoRecord::FlushProcess(const uint32_t sensorId, const uint32_t flag, const int32_t pid,
                                       const bool isEnableFlush)
 {
-    auto ret = sensorServiceImpl_.RunCommand(sensorId, FLUSH, 0);
+    auto ret = sensorHdiConnection_.RunCommand(sensorId, FLUSH, 0);
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s flush command failed", __func__);
         return ret;

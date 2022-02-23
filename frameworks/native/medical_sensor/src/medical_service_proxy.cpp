@@ -27,7 +27,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "MedicalSensorServiceProxy" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceProxy" };
 constexpr int32_t MAX_SENSOR_COUNT = 200;
 enum {
     FLUSH = 0,

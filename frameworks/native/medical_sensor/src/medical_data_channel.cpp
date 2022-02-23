@@ -38,7 +38,7 @@ std::shared_ptr<MyEventHandler> MedicalSensorDataChannel::eventHandler_;
 std::shared_ptr<AppExecFwk::EventRunner> MedicalSensorDataChannel::eventRunner_;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_NATIVE, "MedicalSensorDataChannel" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorDataChannel" };
 // max 100 data in cache buffer
 constexpr int32_t SENSOR_READ_DATA_SIZE = sizeof(struct SensorEvent) * 100;
 const uint32_t STOP_EVENT_ID = 0;

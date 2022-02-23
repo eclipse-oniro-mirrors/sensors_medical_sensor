@@ -18,7 +18,7 @@
 #include <mutex>
 
 #include "securec.h"
-#include "medical_service_impl.h"
+#include "sensor_hdi_connection.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
@@ -27,7 +27,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "ClientInfo" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "ClientInfo" };
 constexpr uint32_t INVALID_SENSOR_ID = -1;
 constexpr int32_t INVALID_PID = -1;
 constexpr int32_t INVALID_UID = -1;
@@ -474,24 +474,23 @@ void ClientInfo::StoreEvent(const struct SensorEvent &event)
 {
     bool foundSensor = false;
     struct SensorEvent storedEvent;
-    auto sensorServiceImpl = &MedicalSensorServiceImpl::GetInstance();
-    if (sensorServiceImpl == nullptr) {
-        HiLog::Error(LABEL, "%{public}s sensorServiceImpl cannot be null", __func__);
+    auto sensorHdiConnection = &SensorHdiConnection::GetInstance();
+    if (sensorHdiConnection == nullptr) {
+        HiLog::Error(LABEL, "%{public}s sensorHdiConnection cannot be null", __func__);
         return;
     }
-    auto sensors = sensorServiceImpl->GetSensorList();
-    size_t len = sensors.size();
-    if (len == 0) {
+    std::vector<MedicalSensor> sensors;
+    int32_t ret = sensorHdiConnection->GetSensorList(sensors);
+    if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s GetSensorList failed", __func__);
         return;
     }
 
-    errno_t ret = memcpy_s(&storedEvent, sizeof(storedEvent), &event, sizeof(event));
-    if (ret != EOK) {
+    if (memcpy_s(&storedEvent, sizeof(storedEvent), &event, sizeof(event)) != EOK) {
         HiLog::Error(LABEL, "%{public}s memcpy_s failed", __func__);
         return;
     }
-    for (size_t i = 0; i < len; i++) {
+    for (size_t i = 0; i < sensors.size(); i++) {
         if ((int32_t)(sensors[i].GetSensorId()) == storedEvent.sensorTypeId) {
             HiLog::Debug(LABEL, "%{public}s sensorFlags : %{public}u", __func__, sensors[i].GetFlags());
             foundSensor = true;

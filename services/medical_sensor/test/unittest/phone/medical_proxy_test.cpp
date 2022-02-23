@@ -35,7 +35,7 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_TEST, "AfeProxyTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeProxyTest" };
 const uint32_t INVALID_SENSOR_ID = -1;
 const std::string CMD_LINE = "ps -ef | grep 'hardware.afe' | grep -v grep | awk '{print $2}'";
 constexpr int32_t BUFFER_SIZE = 8;

@@ -30,7 +30,7 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_TEST, "AfeDataProcesserTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeDataProcesserTest" };
 constexpr uint32_t ACC_SENSOR_ID = 0;
 constexpr uint32_t WAIT_TIME = 3000;
 constexpr uint64_t SAMPLING_PEROID_NS = 200000000;

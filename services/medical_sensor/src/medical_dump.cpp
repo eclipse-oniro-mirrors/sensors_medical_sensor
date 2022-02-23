@@ -26,7 +26,7 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "MedicalSensorDump" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorDump" };
 constexpr uint32_t MAX_DUMP_DATA_SIZE = 10;
 constexpr uint32_t MS_NS = 1000000;
 constexpr uint32_t PPG = 256;

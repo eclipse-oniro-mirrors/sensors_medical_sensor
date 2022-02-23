@@ -34,7 +34,7 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_TEST, "AfeDFXTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeDFXTest" };
 const std::string CMD_LINE = "ps -ef | grep 'hhealth' | grep -v grep | awk '{print $2}'";
 constexpr int32_t BUFFER_SIZE = 8;
 constexpr pid_t INVALID_PID = -1;

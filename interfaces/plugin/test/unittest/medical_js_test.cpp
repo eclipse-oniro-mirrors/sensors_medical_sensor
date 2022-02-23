@@ -30,7 +30,7 @@ using namespace OHOS::HiviewDFX;
 static NativeEngine* g_nativeEngine = nullptr;
 namespace {
     using namespace OHOS::HiviewDFX;
-    static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002708, "AfeJsTest"};
+    static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002784, "AfeJsTest"};
 }
 
 class AfeJsTest : public testing::Test {

@@ -29,7 +29,7 @@ using namespace OHOS::HiviewDFX;
 
 namespace {
 constexpr OHOS::HiviewDFX::HiLogLabel LABEL = {
-    LOG_CORE, MedicalSensorLogDomain::SENSOR_UTILS, "ReportDataCache"
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_UTILS, "ReportDataCache"
 };
 }  // namespace
 ReportDataCache::ReportDataCache()

@@ -21,14 +21,15 @@
 namespace OHOS {
 namespace MedicalSensorLogDomain {
 constexpr uint32_t COMMON = 0xD002700;
-constexpr uint32_t SENSOR_ADAPTER = 0xD002701;
-constexpr uint32_t SENSOR_SERVICE = 0xD002702;
-constexpr uint32_t SENSOR_UTILS = 0xD002703;
-constexpr uint32_t SENSOR_TEST = 0xD002704;
-constexpr uint32_t SENSOR_NATIVE = 0xD002705;
-constexpr uint32_t SENSOR_JNI = 0xD002706;
-constexpr uint32_t SENSORS_IMPLEMENT = 0xD002707;
-constexpr uint32_t SENSORS_INTERFACE = 0xD002708;
+constexpr uint32_t MEDICAL_SENSOR_FRAMEWORK = 0xD002781;
+constexpr uint32_t MEDICAL_SENSOR_SERVICE = 0xD002782;
+constexpr uint32_t MEDICAL_SENSOR_UTILS = 0xD002783;
+constexpr uint32_t MEDICAL_SENSOR_TEST = 0xD002784;
+constexpr uint32_t MEDICAL_SENSOR_NATIVE = 0xD002785;
+constexpr uint32_t MEDICAL_SENSOR_JSNAPI = 0xD002786;
+constexpr uint32_t MEDICAL_SENSOR_HDI_ADAPTOR = 0xD002787;
+constexpr uint32_t MEDICAL_SENSOR_HDI_HARDWARE = 0xD002788;
+constexpr uint32_t MEDICAL_SENSOR_HDI_INTERFACE = 0xD002789;
 }  // namespace MedicalSensorLogDomain
 }  // namespace OHOS
 #endif  // SENSORS_LOG_DOMAIN_H

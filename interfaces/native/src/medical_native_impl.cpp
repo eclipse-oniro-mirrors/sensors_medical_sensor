@@ -28,7 +28,7 @@ using OHOS::Sensors::MedicalSensorServiceClient;
 using OHOS::Sensors::INVALID_POINTER;
 using OHOS::Sensors::SUCCESS;
 
-static const HiLogLabel LABEL = {LOG_CORE, OHOS::MedicalSensorLogDomain::SENSORS_INTERFACE, "AfeNativeAPI"};
+static const HiLogLabel LABEL = {LOG_CORE, OHOS::MedicalSensorLogDomain::MEDICAL_SENSOR_NATIVE, "AfeNativeAPI"};
 static bool g_isChannelCreated;
 static int64_t g_samplingInterval;
 static int64_t g_reportInterval;

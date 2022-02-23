@@ -24,7 +24,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "MedicalSensorManager" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorManager" };
 constexpr uint32_t INVALID_SENSOR_ID = -1;
 constexpr uint32_t PROXIMITY_SENSOR_ID = 50331904;
 constexpr float PROXIMITY_FAR = 5.0;
@@ -69,9 +69,9 @@ bool MedicalSensorManager::SetBestSensorParams(uint32_t sensorId, int64_t sampli
     bestSamplingPeriodNs = (samplingPeriodNs < bestSamplingPeriodNs) ? samplingPeriodNs : bestSamplingPeriodNs;
     bestReportDelayNs = (maxReportDelayNs < bestReportDelayNs) ? maxReportDelayNs : bestReportDelayNs;
     HiLog::Debug(LABEL, "%{public}s bestSamplingPeriodNs : %{public}d", __func__, int32_t { bestSamplingPeriodNs });
-    auto ret = sensorServiceImpl_.SetSensorConfig(sensorId, bestSamplingPeriodNs, bestReportDelayNs);
+    auto ret = sensorHdiConnection_.SetBatch(sensorId, bestSamplingPeriodNs, bestReportDelayNs);
     if (ret != ERR_OK) {
-        HiLog::Error(LABEL, "%{public}s SetSensorConfig failed", __func__);
+        HiLog::Error(LABEL, "%{public}s SetBatch failed", __func__);
         return false;
     }
     HiLog::Debug(LABEL, "%{public}s end", __func__);
@@ -86,10 +86,10 @@ bool MedicalSensorManager::ResetBestSensorParams(uint32_t sensorId)
         return false;
     }
     MedicalSensorBasicInfo sensorInfo = clientInfo_.GetBestSensorInfo(sensorId);
-    auto ret = sensorServiceImpl_.SetSensorConfig(sensorId, sensorInfo.GetSamplingPeriodNs(), 
+    auto ret = sensorHdiConnection_.SetBatch(sensorId, sensorInfo.GetSamplingPeriodNs(), 
                                                   sensorInfo.GetMaxReportDelayNs());
     if (ret != ERR_OK) {
-        HiLog::Error(LABEL, "%{public}s SetSensorConfig failed", __func__);
+        HiLog::Error(LABEL, "%{public}s SetBatch failed", __func__);
         return false;
     }
     HiLog::Debug(LABEL, "%{public}s end", __func__);
