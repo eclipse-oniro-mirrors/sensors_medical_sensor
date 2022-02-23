@@ -25,7 +25,7 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_TEST, "ClientInfoTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "ClientInfoTest" };
 const uint32_t INVALID_SENSOR_ID = -1;
 const uint32_t ACC_SENSOR_ID = (1 << 16) | (1 << 8);
 const uint32_t MAG_SENSOR_ID = (1 << 24) | (1 << 16) | (1 << 8);

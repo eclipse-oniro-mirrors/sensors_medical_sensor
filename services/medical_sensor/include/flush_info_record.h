@@ -23,7 +23,7 @@
 #include "client_info.h"
 #include "refbase.h"
 #include "medical_basic_data_channel.h"
-#include "medical_service_impl.h"
+#include "sensor_hdi_connection.h"
 #include "medical_errors.h"
 #include "singleton.h"
 #include "nocopyable.h"
@@ -58,7 +58,7 @@ public:
 
 private:
     DISALLOW_COPY_AND_MOVE(FlushInfoRecord);
-    MedicalSensorServiceImpl &sensorServiceImpl_ = MedicalSensorServiceImpl::GetInstance();
+    SensorHdiConnection &sensorHdiConnection_ = SensorHdiConnection::GetInstance();
     ClientInfo &clientInfo_ = ClientInfo::GetInstance();
     // sensorId, channel pointer for pending flush.
     std::unordered_map<uint32_t, std::vector<struct FlushInfo>> flushInfo_;

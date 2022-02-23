@@ -25,7 +25,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_UTILS, "PermissionUtil" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_UTILS, "PermissionUtil" };
 constexpr uint32_t SENSOR_PPG_ID = 256;
 constexpr uint32_t SENSOR_HEART_RATE_ID = 83886336;
 constexpr int32_t GET_SERVICE_MAX_COUNT = 30;

@@ -33,7 +33,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_NATIVE, "MedicalSensorServiceClient" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceClient" };
 constexpr int32_t GET_SERVICE_MAX_COUNT = 30;
 constexpr uint32_t WAIT_MS = 200;
 }  // namespace

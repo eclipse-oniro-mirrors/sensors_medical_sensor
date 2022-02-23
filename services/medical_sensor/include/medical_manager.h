@@ -23,7 +23,7 @@
 #include "client_info.h"
 #include "flush_info_record.h"
 #include "medical_data_processer.h"
-#include "medical_service_impl.h"
+#include "sensor_hdi_connection.h"
 #include "medical_native_type.h"
 
 namespace OHOS {
@@ -43,7 +43,7 @@ public:
     void GetPackageNameFromUid(int32_t uid, std::string &packageName);
 
 private:
-    MedicalSensorServiceImpl &sensorServiceImpl_ = MedicalSensorServiceImpl::GetInstance();
+    SensorHdiConnection &sensorHdiConnection_ = SensorHdiConnection::GetInstance();
     ClientInfo &clientInfo_ = ClientInfo::GetInstance();
     std::thread dataThread_;
     sptr<MedicalSensorDataProcesser> sensorDataProcesser_;

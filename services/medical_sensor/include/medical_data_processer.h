@@ -28,7 +28,7 @@
 #include "report_data_cache.h"
 #include "medical.h"
 #include "medical_log_domain.h"
-#include "medical_service_impl.h"
+#include "sensor_hdi_connection.h"
 #include "medical_native_type.h"
 
 namespace OHOS {

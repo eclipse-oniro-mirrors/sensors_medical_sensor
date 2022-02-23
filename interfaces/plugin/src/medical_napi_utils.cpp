@@ -23,7 +23,7 @@
 #include "hilog/log.h"
 
 using namespace OHOS::HiviewDFX;
-static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002708, "AfeJsAPI"};
+static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002786, "AfeJsAPI"};
 bool IsMatchType(napi_value value, napi_valuetype type, napi_env env)
 {
     napi_valuetype paramType;

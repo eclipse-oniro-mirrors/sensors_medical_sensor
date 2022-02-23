@@ -34,7 +34,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_SERVICE, "PpgService" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorService" };
 constexpr uint32_t INVALID_SENSOR_ID = -1;
 constexpr int32_t INVALID_PID = -1;
 constexpr int64_t MAX_EVENT_COUNT = 1000;
@@ -95,7 +95,7 @@ void MedicalSensorService::OnStart()
 
 bool MedicalSensorService::InitInterface()
 {
-    auto ret = sensorServiceImpl_.InitSensorServiceImpl();
+    auto ret = sensorHdiConnection_.ConnectHdi();
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s InitSensorServiceImpl failed", __func__);
         return false;
@@ -113,7 +113,7 @@ bool MedicalSensorService::InitDataCache()
         return false;
     }
     DataCacheFunc cacheData = &ReportDataCache::CacheData;
-    auto ret = sensorServiceImpl_.RegisteDataReport(cacheData, reportDataCache_);
+    auto ret = sensorHdiConnection_.RegisteDataReport(cacheData, reportDataCache_);
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s RegisterDataReport failed", __func__);
         return false;
@@ -124,13 +124,18 @@ bool MedicalSensorService::InitDataCache()
 bool MedicalSensorService::InitSensorList()
 {
     std::lock_guard<std::mutex> sensorLock(sensorsMutex_);
-    sensors_ = sensorServiceImpl_.GetSensorList();
-    {
-        std::lock_guard<std::mutex> sensorMapLock(sensorMapMutex_);
-        for (const auto &it : sensors_) {
-            sensorMap_.insert(std::make_pair(it.GetSensorId(), it));
-        }
+    int32_t ret = sensorHdiConnection_.GetSensorList(sensors_);
+    if (ret < 0) {
+        HiLog::Error(LABEL, "%{public}s GetSensorList failed", __func__);
+        return false;
     }
+
+    std::lock_guard<std::mutex> sensorMapLock(sensorMapMutex_);
+    for (const auto &it : sensors_) {
+        sensorMap_.insert(std::make_pair(it.GetSensorId(), it));
+        HiLog::Debug(LABEL, "%{public}s sensorId = %{public}d, name = %{public}s", __func__, it.GetSensorId(), it.GetName().c_str());
+    }
+
     return true;
 }
 
@@ -141,6 +146,10 @@ void MedicalSensorService::OnStop()
         return;
     }
     state_ = MedicalSensorServiceState::STATE_STOPPED;
+    int32_t ret = sensorHdiConnection_.DestroyHdiConnection();
+    if (ret != ERR_OK) {
+        HiLog::Error(LABEL, "%{public}s destroy hdi connect fail", __func__);
+    }
 }
 
 void MedicalSensorService::ReportSensorUsedInfo(uint32_t sensorId, bool enable)
@@ -233,7 +242,7 @@ ErrCode MedicalSensorService::EnableSensor(uint32_t sensorId, int64_t samplingPe
     ReportSensorUsedInfo(sensorId, SENSOR_ENABLED);
     std::lock_guard<std::mutex> serviceLock(serviceLock_);
     if (clientInfo_.GetSensorState(sensorId) == SENSOR_ENABLED) {
-        HiLog::Warn(LABEL, "%{public}s afe.has been enabled already", __func__);
+        HiLog::Warn(LABEL, "%{public}s medical sensor has been enabled already", __func__);
         auto ret = SaveSubscriber(sensorId, samplingPeriodNs, maxReportDelayNs);
         if (ret != ERR_OK) {
             HiLog::Error(LABEL, "%{public}s SaveSubscriber failed", __func__);
@@ -255,7 +264,7 @@ ErrCode MedicalSensorService::EnableSensor(uint32_t sensorId, int64_t samplingPe
         return ret;
     }
 
-    ret = sensorServiceImpl_.EnableSensor(sensorId);
+    ret = sensorHdiConnection_.EnableSensor(sensorId);
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s EnableSensor failed", __func__);
         clientInfo_.RemoveSubscriber(sensorId, this->GetCallingPid());
@@ -287,7 +296,7 @@ ErrCode MedicalSensorService::DisableSensor(uint32_t sensorId)
         HiLog::Warn(LABEL, "%{public}s other client is using this sensor now, cannot disable", __func__);
         return ERR_OK;
     }
-    if (sensorServiceImpl_.DisableSensor(sensorId) != ERR_OK) {
+    if (sensorHdiConnection_.DisableSensor(sensorId) != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s DisableSensor failed", __func__);
         return DISABLE_SENSOR_ERR;
     }
@@ -303,7 +312,7 @@ ErrCode MedicalSensorService::SetOption(uint32_t sensorId, uint32_t opt)
         HiLog::Error(LABEL, "%{public}s sensorId is invalid", __func__);
         return ERR_NO_INIT;
     }
-    if (sensorServiceImpl_.SetOption(sensorId, opt) != ERR_OK) {
+    if (sensorHdiConnection_.SetOption(sensorId, opt) != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s SetOption failed", __func__);
         return DISABLE_SENSOR_ERR;
     }
@@ -341,7 +350,7 @@ ErrCode MedicalSensorService::RunCommand(uint32_t sensorId, uint32_t cmdType, ui
         }
         return retFlush;
     }
-    if (sensorServiceImpl_.RunCommand(sensorId, cmdType, params) != ERR_OK) {
+    if (sensorHdiConnection_.RunCommand(sensorId, cmdType, params) != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s RunCommand failed", __func__);
         return RUN_COMMAND_ERR;
     }
@@ -354,7 +363,11 @@ std::vector<MedicalSensor> MedicalSensorService::GetSensorList()
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
     std::lock_guard<std::mutex> sensorLock(sensorsMutex_);
-    sensors_ = sensorServiceImpl_.GetSensorList();
+    int32_t ret = sensorHdiConnection_.GetSensorList(sensors_);
+    if (ret < 0) {
+        HiLog::Error(LABEL, "%{public}s GetSensorList failed", __func__);
+        return sensors_;
+    }
     for (const auto &it : sensors_) {
         std::lock_guard<std::mutex> sensorMapLock(sensorMapMutex_);
         sensorMap_.insert(std::make_pair(it.GetSensorId(), it));

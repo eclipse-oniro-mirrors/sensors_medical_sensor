@@ -26,7 +26,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_UTILS, "DmdReport" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_UTILS, "DmdReport" };
 constexpr int32_t SECONDS_HALF_HOUR = 1800;
 }  // namespace
 

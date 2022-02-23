@@ -13,25 +13,24 @@
  * limitations under the License.
  */
 
-#include "medical_client_stub.h"
+#ifndef SENSOR_EVENT_CALLBACK_H
+#define SENSOR_EVENT_CALLBACK_H
 
-#include "message_parcel.h"
-#include "medical_errors.h"
-#include "medical_log_domain.h"
+#include "sensor_callback_stub.h"
+
+using OHOS::HDI::Sensor::V1_0::HdfSensorEvents;
+using OHOS::HDI::Sensor::V1_0::SensorCallbackStub;
 
 namespace OHOS {
 namespace Sensors {
-using namespace OHOS::HiviewDFX;
+class SensorEventCallback : public SensorCallbackStub {
+public:
 
-namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorClientStub" };
-}
+    virtual ~SensorEventCallback() {}
 
-int32_t MedicalSensorClientStub::OnRemoteRequest(uint32_t code, MessageParcel &data, MessageParcel &reply,
-                                          MessageOption &option)
-{
-    HiLog::Debug(LABEL, "%{public}s begin, cmd : %{public}u", __func__, code);
-    return NO_ERROR;
-}
+    int32_t OnDataEvent(const HdfSensorEvents& event) override;
+};
 }  // namespace Sensors
 }  // namespace OHOS
+#endif // SENSOR_EVENT_CALLBACK_H
+

@@ -33,7 +33,7 @@
 #include "securec.h"
 
 using namespace OHOS::HiviewDFX;
-static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002708, "AfeJsAPI"};
+static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002786, "AfeJsAPI"};
 
 static std::map<int32_t, struct AsyncCallbackInfo*> g_onCallbackInfos;
 

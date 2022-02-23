@@ -21,14 +21,13 @@
 #include <unordered_map>
 
 #include "client_info.h"
-#include "medical_service_impl.h"
-
 #include "death_recipient_template.h"
 #include "nocopyable.h"
 #include "medical_manager.h"
 #include "medical_service_stub.h"
 #include "system_ability.h"
 #include "medical_native_type.h"
+#include "sensor_hdi_connection.h"
 
 namespace OHOS {
 namespace Sensors {
@@ -86,7 +85,7 @@ private:
     std::mutex sensorMapMutex_;
     std::vector<MedicalSensor> sensors_;
     std::unordered_map<uint32_t, MedicalSensor> sensorMap_;
-    MedicalSensorServiceImpl &sensorServiceImpl_ = MedicalSensorServiceImpl::GetInstance();
+    SensorHdiConnection &sensorHdiConnection_ = SensorHdiConnection::GetInstance();
     ClientInfo &clientInfo_ = ClientInfo::GetInstance();
     MedicalSensorManager &sensorManager_ = MedicalSensorManager::GetInstance();
     FlushInfoRecord &flushInfo_ = FlushInfoRecord::GetInstance();

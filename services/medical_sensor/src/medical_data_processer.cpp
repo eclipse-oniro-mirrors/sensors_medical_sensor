@@ -30,7 +30,7 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::SENSOR_UTILS, "MedicalSensorDataProcesser" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorDataProcesser" };
 
 enum {
     FIRST_INDEX = 1,
@@ -361,8 +361,8 @@ int32_t MedicalSensorDataProcesser::ProcessEvents(sptr<ReportDataCache> dataCach
         HiLog::Error(LABEL, "%{public}s dataCallback cannot be null", __func__);
         return INVALID_POINTER;
     }
-    std::unique_lock<std::mutex> lk(MedicalSensorServiceImpl::dataMutex_);
-    MedicalSensorServiceImpl::dataCondition_.wait(lk);
+    std::unique_lock<std::mutex> lk(ISensorHdiConnection::dataMutex_);
+    ISensorHdiConnection::dataCondition_.wait(lk);
     auto &eventsBuf = dataCache->GetEventData();
     if (eventsBuf.eventNum <= 0) {
         HiLog::Error(LABEL, "%{public}s data cannot be empty", __func__);
