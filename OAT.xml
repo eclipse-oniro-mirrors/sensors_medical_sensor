@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2021 Huawei Device Co., Ltd.
+<!-- Copyright (c) 2022 Chipsea Technologies (Shenzhen) Corp., Ltd.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -27,11 +27,12 @@
                 <policyitem type="compatibility" name="Apache" path="sa_profile/.*" rule="may" group="defaultGroup" filefilter="defaultPolicyFilter" desc=""/>
                 <policyitem type="compatibility" name="Apache" path="services/.*" rule="may" group="defaultGroup" filefilter="defaultPolicyFilter" desc=""/>
                 <policyitem type="compatibility" name="Apache" path="utils/.*" rule="may" group="defaultGroup" filefilter="defaultPolicyFilter" desc=""/>
+                <policyitem type="copyright" name="Chipsea Technologies (Shenzhen) Corp., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed by chipsea"/>
             </policy>
         </policylist>
         <filefilterlist>
             <filefilter name="defaultPolicyFilter" desc="Files not to check">
-                <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/ohosTest/resources/base/media/icon.png" desc="png文件"/>
+                <filteritem type="filename" name="*.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/main/resources/base/media/icon.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/main/resources/base/media/icon_small.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/test/sensor_js_test_hap/entry/src/ohosTest/js/default/app.js" desc="js文件，不参与打包不影响兼容性"/>
