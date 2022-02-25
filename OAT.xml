@@ -32,7 +32,7 @@
         </policylist>
         <filefilterlist>
             <filefilter name="defaultPolicyFilter" desc="Files not to check">
-                <filteritem type="filename" name="*.png" desc="png文件"/>
+                <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/ohosTest/resources/base/media/icon.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/main/resources/base/media/icon.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/vibrate/test/vibrate_js_test_hap/entry/src/main/resources/base/media/icon_small.png" desc="png文件"/>
                 <filteritem type="filepath" name="interfaces/plugin/test/sensor_js_test_hap/entry/src/ohosTest/js/default/app.js" desc="js文件，不参与打包不影响兼容性"/>
@@ -64,6 +64,7 @@
             <filefilter name="readmeOpenSourcefileNamePolicyFilter" desc="Filters for README.OpenSource file policies">
             </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
+                <filteritem type="filepath" name="figures/zh-cn_image_medical_sensor_fwk.png" desc="png文件，不参与打包不影响兼容性"/>
                 <filteritem type="filepath" name="interfaces/plugin/test/sensor_js_test_hap/entry/src/main/resources/base/media/icon_small.png" desc="js文件，不参与打包不影响兼容性"/>
                 <filteritem type="filepath" name="interfaces/plugin/test/sensor_js_test_hap/entry/src/ohosTest/resources/base/media/icon.png" desc="js文件，不参与打包不影响兼容性"/>
                 <filteritem type="filepath" name="interfaces/plugin/test/sensor_js_test_hap/entry/src/main/resources/base/media/icon.png" desc="js文件，不参与打包不影响兼容性"/>
