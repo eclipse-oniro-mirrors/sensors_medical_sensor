@@ -78,8 +78,8 @@ napi_value GetUndefined(napi_env env)
 }
 
 std::map<int32_t, std::vector<std::string>> g_sensorAttributeList = {
-    { AFE_TYPE_ID_NONE, { "dataArray" } },
-    { AFE_TYPE_ID_PHOTOPLETHYSMOGRAPH, { "dataArray" } },
+    { TYPE_ID_NONE, { "dataArray" } },
+    { TYPE_ID_PHOTOPLETHYSMOGRAPH, { "dataArray" } },
 };
 
 void EmitAsyncCallbackWork(AsyncCallbackInfo *asyncCallbackInfo)
