@@ -82,6 +82,7 @@ bool MedicalSensorServiceClient::IsValidSensorId(uint32_t sensorId)
         return false;
     }
     for (auto &sensor : afeList_) {
+        HiLog::Debug(LABEL, "%{public}s sensor.GetSensorId() = %{public}u", __func__, sensor.GetSensorId());
         if (sensor.GetSensorId() == sensorId) {
             return true;
         }
@@ -91,7 +92,7 @@ bool MedicalSensorServiceClient::IsValidSensorId(uint32_t sensorId)
 
 int32_t MedicalSensorServiceClient::EnableSensor(uint32_t sensorId, int64_t samplingPeriod, int64_t maxReportDelay)
 {
-    HiLog::Debug(LABEL, "%{public}s begin", __func__);
+    HiLog::Debug(LABEL, "%{public}s begin, sensorId = %{public}u", __func__, sensorId);
     if (!IsValidSensorId(sensorId)) {
         HiLog::Error(LABEL, "%{public}s sensorId is invalid", __func__);
         return SENSOR_NATIVE_SAM_ERR;

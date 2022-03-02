@@ -119,7 +119,7 @@ import medical from '@ohos.medical';
 export default {
     onCreate() {
         //步骤2 监听传感器数据变化，并注册传感器类型
-        medical.on(medical.AFE_TYPE_ID_PHOTOPLETHYSMOGRAPH, (error, data) => {
+        medical.on(medical.MedicalSensorType.TYPE_ID_PHOTOPLETHYSMOGRAPH, (error, data) => {
             if (error) {
                 console.error("Failed to subscribe to ppg data. Error code: " + error.code + "; message: " + error.message);
                 return;
@@ -130,7 +130,7 @@ export default {
     onDestroy() {
         console.info('AceApplication onDestroy');
         //步骤3 取消订阅传感器数据
-        medical.off(sensor.AFE_TYPE_ID_PHOTOPLETHYSMOGRAPH, function(error) {
+        medical.off(medical.MedicalSensorType.TYPE_ID_PHOTOPLETHYSMOGRAPH, function(error) {
             if (error) {
                 console.error("Failed to unsubscribe from ppg data. Error code: " + error.code + "; message: " + error.message);
                 return;

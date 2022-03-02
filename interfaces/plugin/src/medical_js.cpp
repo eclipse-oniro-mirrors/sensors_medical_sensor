@@ -236,6 +236,31 @@ static napi_value SetOpt(napi_env env, napi_callback_info info)
     return nullptr;
 }
 
+static napi_value EnumClassConstructor(napi_env env, napi_callback_info info)
+{
+    size_t argc = 0;
+    napi_value args[1] = {0};
+    napi_value res = nullptr;
+    void *data = nullptr;
+    napi_status status = napi_get_cb_info(env, info, &argc, args, &res, &data);
+    if (status != napi_ok) {
+        return nullptr;
+    }
+    return res;
+}
+
+static napi_value CreateEnumMdicalSensorType(napi_env env, napi_value exports)
+{
+    napi_property_descriptor desc[] = {
+        DECLARE_NAPI_STATIC_PROPERTY("TYPE_ID_PHOTOPLETHYSMOGRAPH", GetNapiInt32(TYPE_ID_PHOTOPLETHYSMOGRAPH, env)),
+    };
+    napi_value result = nullptr;
+    napi_define_class(env, "MedicalSensorType", NAPI_AUTO_LENGTH, EnumClassConstructor, nullptr,
+        sizeof(desc) / sizeof(*desc), desc, &result);
+    napi_set_named_property(env, exports, "MedicalSensorType", result);
+    return exports;
+}
+
 EXTERN_C_START
 
 static napi_value Init(napi_env env, napi_value exports)
@@ -246,6 +271,7 @@ static napi_value Init(napi_env env, napi_value exports)
         DECLARE_NAPI_FUNCTION("off", Off)
     };
     NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(napi_property_descriptor), desc));
+    CreateEnumMdicalSensorType(env, exports);
     return exports;
 }
 EXTERN_C_END

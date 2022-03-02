@@ -64,12 +64,12 @@ extern "C" {
  * @since 5
  */
 typedef enum {
-    AFE_TYPE_ID_NONE = 0,                   /**< None, for testing only */
-    AFE_TYPE_ID_PHOTOPLETHYSMOGRAPH = 129,    /**< Photoplethysmography sensor */
-    AFE_TYPE_ID_ELECTROCARDIOGRAPH = 130,     /**< Electrocardiogram (ECG) sensor */
-    AFE_TYPE_ID_HEART_RATE = 278,            /**< Heart rate sensor */
-    AFE_TYPE_ID_WEAR_DETECTION = 280,        /**< Wear detection sensor */
-    AFE_TYPE_ID_MAX = 0xFFF,      /**< Maximum number of sensor type IDs */
+    TYPE_ID_NONE = 0,                   /**< None, for testing only */
+    TYPE_ID_PHOTOPLETHYSMOGRAPH = 129,    /**< Photoplethysmography sensor */
+    TYPE_ID_ELECTROCARDIOGRAPH = 130,     /**< Electrocardiogram (ECG) sensor */
+    TYPE_ID_HEART_RATE = 278,            /**< Heart rate sensor */
+    TYPE_ID_WEAR_DETECTION = 280,        /**< Wear detection sensor */
+    TYPE_ID_MAX = 0xFFF,      /**< Maximum number of sensor type IDs */
 } MedicalSensorTypeId;
 
 /**
