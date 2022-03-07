@@ -110,31 +110,30 @@ static int32_t SubscribeSensor(int32_t sensorTypeId, int64_t interval, const Med
 static napi_value On(napi_env env, napi_callback_info info)
 {
     HiLog::Info(LABEL, "%{public}s in", __func__);
+    size_t requiredMaxArgc = 3;
+    size_t requiredMinArgc = 2;
     size_t argc = 3;
     napi_value args[3];
     napi_value thisVar;
     NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, &thisVar, NULL));
-    if (argc <= 1 || argc > 3) {
-        HiLog::Error(LABEL, "%{public}s the number of input parameters does not match", __func__);
-        return nullptr;
-    }
-    if (!IsMatchType(args[0], napi_number, env)) {
-        HiLog::Error(LABEL, "%{public}s the first parameter should be napi_number type", __func__);
-        return nullptr;
-    }
+    NAPI_ASSERT(env, ((argc >= requiredMinArgc) && (argc <= requiredMaxArgc)), "requires 2 or 3 parameteres");
+
+    napi_valuetype eventId = napi_undefined;
+    napi_typeof(env, args[0], &eventId);
+    NAPI_ASSERT(env, eventId == napi_number, "type mismatch for parameter 1");
     int32_t sensorTypeId = GetCppInt32(args[0], env);
-    if (!IsMatchType(args[1], napi_function, env)) {
-        HiLog::Error(LABEL, "%{public}s the second parameter should be napi_function type!", __func__);
-        return nullptr;
-    }
+
+    napi_valuetype handler = napi_undefined;
+    napi_typeof(env, args[1], &handler);
+    NAPI_ASSERT(env, handler == napi_function, "type mismatch for parameter 2");
+    
     int64_t interval = 200000000;
-    if (argc == 3) {
+    if (argc == requiredMaxArgc) {
         HiLog::Info(LABEL, "%{public}s argc = 3!", __func__);
         napi_value value = NapiGetNamedProperty(args[2], "interval", env);
-        if (!IsMatchType(value, napi_number, env)) {
-            HiLog::Error(LABEL, "%{public}s argument should be napi_number type!", __func__);
-            return nullptr;
-        }
+        napi_valuetype intervalType = napi_undefined;
+        napi_typeof(env, value, &intervalType);
+        NAPI_ASSERT(env, intervalType == napi_number, "type mismatch for parameter 3");
         interval = GetCppInt64(value, env);
     }
     AsyncCallbackInfo *asyncCallbackInfo = new AsyncCallbackInfo {
@@ -147,7 +146,6 @@ static napi_value On(napi_env env, napi_callback_info info)
     int32_t ret = SubscribeSensor(sensorTypeId, interval, &user);
     if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s subscribeSensor failed", __func__);
-        asyncCallbackInfo->status = -1;
         EmitAsyncCallbackWork(asyncCallbackInfo);
         g_onCallbackInfos.erase(sensorTypeId);
         return nullptr;
@@ -155,41 +153,44 @@ static napi_value On(napi_env env, napi_callback_info info)
     HiLog::Info(LABEL, "%{public}s out", __func__);
     return nullptr;
 }
-
+ 
 static napi_value Off(napi_env env, napi_callback_info info)
 {
     HiLog::Info(LABEL, "%{public}s in", __func__);
     size_t argc = 2;
+    size_t requiredMaxArgc = 2;
+    size_t requiredMinArgc = 1;
     napi_value args[2];
     napi_value thisVar;
     NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, &thisVar, NULL));
+    NAPI_ASSERT(env, ((argc >= requiredMinArgc) && (argc <= requiredMaxArgc)), "requires 1 or 2 parameteres");
 
-    if (argc < 1) {
-        HiLog::Error(LABEL, "%{public}s Invalid input.", __func__);
-        return nullptr;
-    }
-    if (!IsMatchType(args[0], napi_number, env)) {
-        HiLog::Error(LABEL, "%{public}s argument should be number type!", __func__);
-        return nullptr;
-    }
+    napi_valuetype eventId = napi_undefined;
+    napi_typeof(env, args[0], &eventId);
+    NAPI_ASSERT(env, eventId == napi_number, "type mismatch for parameter 1");
     int32_t sensorTypeId = GetCppInt32(args[0], env);
-    if (!IsMatchType(args[1], napi_function, env)) {
-        HiLog::Error(LABEL, "%{public}s argument should be function type!", __func__);
-        return nullptr;
-    }
+
     AsyncCallbackInfo *asyncCallbackInfo = new AsyncCallbackInfo {
         .env = env,
         .asyncWork = nullptr,
         .deferred = nullptr,
     };
+
+    if (argc == requiredMaxArgc) {
+        napi_valuetype handler = napi_undefined;
+        napi_typeof(env, args[1], &handler);
+        NAPI_ASSERT(env, handler == napi_function, "type mismatch for parameter 2");
+    } else {
+        NAPI_ASSERT(env, g_onCallbackInfos.find(sensorTypeId) != g_onCallbackInfos.end(), "no callback registered");
+        napi_get_reference_value(env, g_onCallbackInfos[sensorTypeId]->callback[0], &args[1]);        
+    }
     napi_create_reference(env, args[1], 1, &asyncCallbackInfo->callback[0]);
+
     int32_t ret = UnsubscribeSensor(sensorTypeId);
     if (ret < 0) {
-        asyncCallbackInfo->status = -1;
         HiLog::Error(LABEL, "%{public}s UnsubscribeSensor failed", __func__);
     } else {
         HiLog::Error(LABEL, "%{public}s UnsubscribeSensor success", __func__);
-        asyncCallbackInfo->status = 0;
         if (g_onCallbackInfos.find(sensorTypeId) != g_onCallbackInfos.end()) {
             napi_delete_reference(env, g_onCallbackInfos[sensorTypeId]->callback[0]);
             delete g_onCallbackInfos[sensorTypeId];

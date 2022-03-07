@@ -21,7 +21,7 @@
 
 #define EVENT_INVALID_PARAMETER (-1);
 #define EVENT_OK 0;
-#define PPG_MAX_DATA_LEN 128
+#define MAX_DATA_LEN 128
 struct AsyncCallbackInfo {
     napi_env env;
     napi_async_work asyncWork;
@@ -29,8 +29,7 @@ struct AsyncCallbackInfo {
     napi_ref callback[1] = { 0 };
     int32_t sensorTypeId;
     int32_t sensorDataLength;
-    uint32_t sensorData[PPG_MAX_DATA_LEN];
-    int32_t status;
+    uint32_t sensorData[MAX_DATA_LEN];
 };
 
 bool IsMatchType(napi_value value, napi_valuetype type, napi_env env);
