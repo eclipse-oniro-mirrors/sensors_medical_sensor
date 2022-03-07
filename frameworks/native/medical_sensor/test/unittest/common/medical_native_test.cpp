@@ -52,7 +52,9 @@ void AfeNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *d
     AfeNativeTest *test = reinterpret_cast<AfeNativeTest *>(data);
     ASSERT_NE(test, nullptr);
     for (int32_t i = 0; i < num; i++) {
+        HiLog::Info(LABEL, "%{public}s sensorTypeId = %{public}d, data->sensorid = %{public}u", __func__, events[i].sensorTypeId, test->afeId_);
         if (events[i].sensorTypeId == (int32_t)test->afeId_) {
+            HiLog::Info(LABEL, "%{public}s got report data, set test->dataReport_ = true", __func__);
             test->dataReport_ = true;
         }
     }
@@ -107,7 +109,7 @@ HWTEST_F(AfeNativeTest, GetSensorList_001, TestSize.Level0)
 HWTEST_F(AfeNativeTest, GetSensorList_002, TestSize.Level0)
 {
     for (const auto &it : afesList_) {
-        ASSERT_EQ(it.GetSensorId() == 0, true);
+        ASSERT_EQ(it.GetSensorId() == 0 || it.GetSensorId() == 129, true);
         ASSERT_EQ(it.GetName().empty(), false);
         ASSERT_EQ(it.GetVendor().empty(), false);
     }
@@ -130,12 +132,13 @@ HWTEST_F(AfeNativeTest, SensorOperation_001, TestSize.Level1)
     ASSERT_EQ(ret, ERR_OK);
     dataReport_ = false;
     // wait evennt: need about 5s from afe enable to data report
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-    ASSERT_EQ(dataReport_, true);
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     ret = afeServiceClient_->DisableSensor(afeId);
     HiLog::Info(LABEL, "DisableSensor ret is : %{public}d", ret);
     ASSERT_EQ(ret, ERR_OK);
+
+    ASSERT_EQ(dataReport_, true);
 }
 
 /*

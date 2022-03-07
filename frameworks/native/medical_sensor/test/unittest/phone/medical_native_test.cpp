@@ -104,12 +104,13 @@ HWTEST_F(AfeNativeTest, SensorOperation_001, TestSize.Level1)
     ASSERT_EQ(ret, ERR_OK);
     dataReport_ = false;
     // wait evennt: need about 5s from afe enable to data report
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-    ASSERT_EQ(dataReport_, true);
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     ret = afeServiceClient_->DisableSensor(afeId);
     HiLog::Info(LABEL, "DisableSensor ret is : %{public}d", ret);
     ASSERT_EQ(ret, ERR_OK);
+
+    ASSERT_EQ(dataReport_, true);
 }
 }  // namespace Sensors
 }  // namespace OHOS
