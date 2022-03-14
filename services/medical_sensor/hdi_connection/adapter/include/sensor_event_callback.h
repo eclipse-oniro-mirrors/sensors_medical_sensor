@@ -16,7 +16,7 @@
 #ifndef SENSOR_EVENT_CALLBACK_H
 #define SENSOR_EVENT_CALLBACK_H
 
-#include "sensor_callback_stub.h"
+#include "v1_0/sensor_callback_stub.h"
 
 using OHOS::HDI::Sensor::V1_0::HdfSensorEvents;
 using OHOS::HDI::Sensor::V1_0::SensorCallbackStub;

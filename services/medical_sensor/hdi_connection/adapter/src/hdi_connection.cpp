@@ -19,7 +19,7 @@
 #include <thread>
 
 #include "sensor_event_callback.h"
-#include "sensor_interface_proxy.h"
+#include "v1_0/sensor_interface_proxy.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
