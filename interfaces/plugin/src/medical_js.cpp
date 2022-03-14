@@ -46,7 +46,7 @@ static void DataCallbackImpl(SensorEvent *event)
     }
     int32_t sensorTypeId = event->sensorTypeId;
     uint32_t *data = (uint32_t *)(event->data);
-    uint32_t maxDataLen = PPG_MAX_DATA_LEN * sizeof(uint32_t);
+    uint32_t maxDataLen = MAX_DATA_LEN * sizeof(uint32_t);
     uint32_t dataLen = (event->dataLen > maxDataLen) ? maxDataLen : event->dataLen;
     // check sensorType
     if (g_onCallbackInfos.find(sensorTypeId) == g_onCallbackInfos.end()) {
@@ -60,7 +60,7 @@ static void DataCallbackImpl(SensorEvent *event)
         HiLog::Error(LABEL, "%{public}s copy data failed", __func__);
         return;
     }
-    onCallbackInfo->status = 1;
+
     EmitUvEventLoop((struct AsyncCallbackInfo *)(onCallbackInfo));
     HiLog::Info(LABEL, "%{public}s end", __func__);
 }
