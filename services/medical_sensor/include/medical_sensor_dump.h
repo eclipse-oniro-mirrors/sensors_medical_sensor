@@ -21,7 +21,7 @@
 #include "singleton.h"
 
 #include "client_info.h"
-#include "medical.h"
+#include "medical_sensor.h"
 #include "nocopyable.h"
 #include "medical_native_type.h"
 

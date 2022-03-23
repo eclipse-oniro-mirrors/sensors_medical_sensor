@@ -19,12 +19,12 @@
 #include <map>
 #include <vector>
 #include "iservice_registry.h"
-#include "medical.h"
-#include "medical_basic_data_channel.h"
-#include "medical_basic_info.h"
-#include "medical_client_stub.h"
-#include "medical_data_channel.h"
-#include "medical_service_proxy.h"
+#include "medical_sensor.h"
+#include "medical_sensor_basic_data_channel.h"
+#include "medical_sensor_basic_info.h"
+#include "medical_sensor_client_stub.h"
+#include "medical_sensor_data_channel.h"
+#include "medical_sensor_service_proxy.h"
 #include "singleton.h"
 #include "medical_native_type.h"
 

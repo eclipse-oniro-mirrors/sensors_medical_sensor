@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_service_stub.h"
+#include "medical_sensor_service_stub.h"
 
 #include <string>
 #include <sys/socket.h>
@@ -53,8 +53,8 @@ MedicalSensorServiceStub::~MedicalSensorServiceStub()
     baseFuncs_.clear();
 }
 
-int32_t MedicalSensorServiceStub::OnRemoteRequest(uint32_t code, MessageParcel &data, MessageParcel &reply,
-                                           MessageOption &option)
+int32_t MedicalSensorServiceStub::OnRemoteRequest(uint32_t code,
+    MessageParcel &data, MessageParcel &reply, MessageOption &option)
 {
     HiLog::Debug(LABEL, "%{public}s begin, cmd : %{public}u", __func__, code);
     std::u16string descriptor = MedicalSensorServiceStub::GetDescriptor();

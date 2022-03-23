@@ -18,7 +18,7 @@
 
 #include "death_recipient_template.h"
 #include "i_sensor_hdi_connection.h"
-#include "medical_basic_info.h"
+#include "medical_sensor_basic_info.h"
 
 namespace OHOS {
 namespace Sensors {

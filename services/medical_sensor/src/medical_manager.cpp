@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-#include "medical_manager.h"
+#include "medical_sensor_manager.h"
 
-#include "medical.h"
+#include "medical_sensor.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
@@ -31,7 +31,7 @@ constexpr float PROXIMITY_FAR = 5.0;
 }  // namespace
 
 void MedicalSensorManager::InitSensorMap(std::unordered_map<uint32_t, MedicalSensor> &sensorMap,
-                                  sptr<MedicalSensorDataProcesser> dataProcesser, sptr<ReportDataCache> dataCache)
+    sptr<MedicalSensorDataProcesser> dataProcesser, sptr<ReportDataCache> dataCache)
 {
     std::lock_guard<std::mutex> sensorLock(sensorMapMutex_);
     sensorMap_.insert(sensorMap.begin(), sensorMap.end());
@@ -86,8 +86,8 @@ bool MedicalSensorManager::ResetBestSensorParams(uint32_t sensorId)
         return false;
     }
     MedicalSensorBasicInfo sensorInfo = clientInfo_.GetBestSensorInfo(sensorId);
-    auto ret = sensorHdiConnection_.SetBatch(sensorId, sensorInfo.GetSamplingPeriodNs(), 
-                                                  sensorInfo.GetMaxReportDelayNs());
+    auto ret = sensorHdiConnection_.SetBatch(sensorId, sensorInfo.GetSamplingPeriodNs(),
+                                             sensorInfo.GetMaxReportDelayNs());
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s SetBatch failed", __func__);
         return false;
@@ -96,7 +96,8 @@ bool MedicalSensorManager::ResetBestSensorParams(uint32_t sensorId)
     return true;
 }
 
-MedicalSensorBasicInfo MedicalSensorManager::GetSensorInfo(uint32_t sensorId, int64_t samplingPeriodNs, int64_t maxReportDelayNs)
+MedicalSensorBasicInfo MedicalSensorManager::GetSensorInfo(uint32_t sensorId,
+    int64_t samplingPeriodNs, int64_t maxReportDelayNs)
 {
     HiLog::Debug(LABEL, "%{public}s begin, sensorId : %{public}u", __func__, sensorId);
     MedicalSensorBasicInfo sensorInfo;
@@ -179,7 +180,6 @@ ErrCode MedicalSensorManager::AfterDisableSensor(uint32_t sensorId)
         auto ret = clientInfo_.GetStoreEvent(sensorId, event);
         if (ret == ERR_OK) {
             HiLog::Debug(LABEL, "%{public}s change the default state is far", __func__);
-            // event.light.data[0] = PROXIMITY_FAR;
             event.data[0] = PROXIMITY_FAR;
             clientInfo_.StoreEvent(event);
         }

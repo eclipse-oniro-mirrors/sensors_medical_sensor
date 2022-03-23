@@ -18,7 +18,7 @@
 
 #include <memory>
 #include <thread>
-#include "medical_basic_data_channel.h"
+#include "medical_sensor_basic_data_channel.h"
 #include "medical_native_type.h"
 #include "my_event_handler.h"
 

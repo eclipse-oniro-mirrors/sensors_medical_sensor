@@ -27,9 +27,9 @@
 #include "permission_util.h"
 #include "iremote_object.h"
 #include "nocopyable.h"
-#include "medical_basic_data_channel.h"
-#include "medical_basic_info.h"
-#include "medical_channel_info.h"
+#include "medical_sensor_basic_data_channel.h"
+#include "medical_sensor_basic_info.h"
+#include "medical_sensor_channel_info.h"
 #include "medical_native_type.h"
 
 namespace OHOS {

@@ -16,7 +16,7 @@
 #ifndef SENSOR_CLIENT_STUB_H
 #define SENSOR_CLIENT_STUB_H
 
-#include "i_medical_client.h"
+#include "i_medical_sensor_client.h"
 #include "iremote_stub.h"
 #include "message_parcel.h"
 

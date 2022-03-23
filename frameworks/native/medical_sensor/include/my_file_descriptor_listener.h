@@ -24,7 +24,7 @@
 #include "event_runner.h"
 #include "file_descriptor_listener.h"
 #include "medical_native_type.h"
-#include "medical_data_channel.h"
+#include "medical_sensor_data_channel.h"
 
 namespace OHOS {
 namespace Sensors {

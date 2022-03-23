@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-#include "medical_data_processer.h"
+#include "medical_sensor_data_processer.h"
 
 #include <sys/socket.h>
 #include <thread>
 
 #include "permission_util.h"
 #include "securec.h"
-#include "medical_basic_data_channel.h"
+#include "medical_sensor_basic_data_channel.h"
 #include "medical_catalog.h"
 #include "medical_errors.h"
 #include "system_ability_definition.h"
@@ -29,14 +29,14 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
-namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorDataProcesser" };
-
-enum {
+enum class FlushIndexId {
     FIRST_INDEX = 1,
     SECOND_INDEX = 2,
     THIRD_INDEX = 3,
 };
+
+namespace {
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorDataProcesser" };
 
 constexpr uint32_t SENSOR_INDEX_SHIFT = 8;
 constexpr uint32_t SENSOR_TYPE_SHIFT = 16;
@@ -44,7 +44,7 @@ constexpr uint32_t SENSOR_CATAGORY_SHIFT = 24;
 
 constexpr uint32_t FLUSH_COMPLETE_ID = ((uint32_t)OTHER << SENSOR_CATAGORY_SHIFT) |
                                        ((uint32_t)SENSOR_TYPE_FLUSH << SENSOR_TYPE_SHIFT) |
-                                       ((uint32_t)FIRST_INDEX << SENSOR_INDEX_SHIFT);
+                                       ((uint32_t)FlushIndexId::FIRST_INDEX << SENSOR_INDEX_SHIFT);
 }  // namespace
 
 MedicalSensorDataProcesser::MedicalSensorDataProcesser(const std::unordered_map<uint32_t, MedicalSensor> &sensorMap)
@@ -60,8 +60,7 @@ MedicalSensorDataProcesser::~MedicalSensorDataProcesser()
 }
 
 void MedicalSensorDataProcesser::SendNoneFifoCacheData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                                                sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event,
-                                                uint64_t periodCount)
+    sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event, uint64_t periodCount)
 {
     std::vector<struct SensorEvent> sendEvents;
     std::lock_guard<std::mutex> dataCountLock(dataCountMutex_);
@@ -113,8 +112,7 @@ void MedicalSensorDataProcesser::SendNoneFifoCacheData(std::unordered_map<uint32
 }
 
 void MedicalSensorDataProcesser::SendFifoCacheData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                                            sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event,
-                                            uint64_t periodCount, uint64_t fifoCount)
+    sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event, uint64_t periodCount, uint64_t fifoCount)
 {
     uint32_t sensorId = event.sensorTypeId;
     if (sensorId == FLUSH_COMPLETE_ID) {
@@ -198,7 +196,7 @@ void MedicalSensorDataProcesser::ReportData(sptr<MedicalSensorBasicDataChannel> 
 }
 
 bool MedicalSensorDataProcesser::ReportNotContinuousData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                                                  sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event)
+    sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event)
 {
     uint32_t sensorId = event.sensorTypeId;
     if (sensorId == FLUSH_COMPLETE_ID) {
@@ -227,7 +225,7 @@ bool MedicalSensorDataProcesser::CheckSendDataPermission(sptr<MedicalSensorBasic
 }
 
 void MedicalSensorDataProcesser::SendRawData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                                      sptr<MedicalSensorBasicDataChannel> channel, std::vector<struct SensorEvent> event)
+    sptr<MedicalSensorBasicDataChannel> channel, std::vector<struct SensorEvent> event)
 {
     if (channel == nullptr || event.empty()) {
         HiLog::Error(LABEL, "%{public}s channel cannot be null or event cannot be empty", __func__);
@@ -266,7 +264,8 @@ void MedicalSensorDataProcesser::SendRawData(std::unordered_map<uint32_t, struct
     }
 }
 
-int32_t MedicalSensorDataProcesser::CacheSensorEvent(const struct SensorEvent &event, sptr<MedicalSensorBasicDataChannel> &channel)
+int32_t MedicalSensorDataProcesser::CacheSensorEvent(
+    const struct SensorEvent &event, sptr<MedicalSensorBasicDataChannel> &channel)
 {
     if (channel == nullptr) {
         HiLog::Error(LABEL, "%{public}s channel cannot be null", __func__);
@@ -307,7 +306,8 @@ void MedicalSensorDataProcesser::EventFilter(struct CircularEventBuf &eventsBuf)
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
     uint32_t realSensorId = 0;
     uint32_t sensorId = eventsBuf.circularBuf[eventsBuf.readPosition].sensorTypeId;
-    HiLog::Debug(LABEL, "%{public}s sensorId = %{public}d, FLUSH_COMPLETE_ID=%{public}d", __func__, sensorId, FLUSH_COMPLETE_ID);
+    HiLog::Debug(LABEL, "%{public}s sensorId = %{public}d, FLUSH_COMPLETE_ID=%{public}d",
+        __func__, sensorId, FLUSH_COMPLETE_ID);
     std::vector<sptr<MedicalSensorBasicDataChannel>> channelList;
     if (sensorId == FLUSH_COMPLETE_ID) {
         realSensorId = eventsBuf.circularBuf[eventsBuf.readPosition].sensorTypeId;
@@ -400,7 +400,8 @@ int32_t MedicalSensorDataProcesser::SendEvents(sptr<MedicalSensorBasicDataChanne
     return SUCCESS;
 }
 
-int32_t MedicalSensorDataProcesser::DataThread(sptr<MedicalSensorDataProcesser> dataProcesser, sptr<ReportDataCache> dataCache)
+int32_t MedicalSensorDataProcesser::DataThread(
+    sptr<MedicalSensorDataProcesser> dataProcesser, sptr<ReportDataCache> dataCache)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
     do {

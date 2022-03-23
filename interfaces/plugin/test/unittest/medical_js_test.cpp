@@ -30,30 +30,30 @@ using namespace OHOS::HiviewDFX;
 static NativeEngine* g_nativeEngine = nullptr;
 namespace {
     using namespace OHOS::HiviewDFX;
-    static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002784, "AfeJsTest"};
+    static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002784, "MedicalJsTest"};
 }
 
-class AfeJsTest : public testing::Test {
+class MedicalJsTest : public testing::Test {
 public:
     void SetUp();
     void TearDown();
-    AfeJsTest();
-    virtual ~AfeJsTest();
+    MedicalJsTest();
+    virtual ~MedicalJsTest();
 protected:
     NativeEngine* engine_;
 };
 
-void AfeJsTest::SetUp()
+void MedicalJsTest::SetUp()
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
 }
 
-void AfeJsTest::TearDown()
+void MedicalJsTest::TearDown()
 {
     HiLog::Info(LABEL, "%{public}s end", __func__);
 }
 
-AfeJsTest::AfeJsTest()
+MedicalJsTest::MedicalJsTest()
 {
     JSRuntime* rt = JS_NewRuntime();
     if (rt == nullptr) {
@@ -68,10 +68,10 @@ AfeJsTest::AfeJsTest()
     js_std_add_helpers(ctx, 0, nullptr);
     g_nativeEngine = new QuickJSNativeEngine(rt, ctx, 0); // default instance id 0
     engine_ = g_nativeEngine;
-
 }
 
-AfeJsTest::~AfeJsTest() {
+MedicalJsTest::~MedicalJsTest()
+{
     delete g_nativeEngine;
     g_nativeEngine = nullptr;
 }
@@ -82,7 +82,7 @@ AfeJsTest::~AfeJsTest() {
  * @tc.type: FUNC
  * @tc.require:SR000G54IU
  */
-HWTEST_F(AfeJsTest, IsMatchType_001, TestSize.Level1)
+HWTEST_F(MedicalJsTest, IsMatchType_001, TestSize.Level1)
 {
     napi_env env = (napi_env)engine_;
     uint32_t cppValue = UINT32_MAX;
@@ -99,9 +99,9 @@ HWTEST_F(AfeJsTest, IsMatchType_001, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require:AR000G54IV
  */
-HWTEST_F(AfeJsTest, IsMatchType_002, TestSize.Level1)
+HWTEST_F(MedicalJsTest, IsMatchType_002, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     const char cppValue[] = "中文,English,123456,!@#";
     size_t cppValueStrLength = strlen(cppValue);
@@ -119,7 +119,7 @@ HWTEST_F(AfeJsTest, IsMatchType_002, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, IsMatchType_003, TestSize.Level1)
+HWTEST_F(MedicalJsTest, IsMatchType_003, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
@@ -140,9 +140,9 @@ HWTEST_F(AfeJsTest, IsMatchType_003, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, IsMatchType_004, TestSize.Level1)
+HWTEST_F(MedicalJsTest, IsMatchType_004, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     const char* tetScriptStr = "new Date();";
     napi_value testScript = nullptr;
@@ -163,9 +163,9 @@ HWTEST_F(AfeJsTest, IsMatchType_004, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, IsMatchType_005, TestSize.Level1)
+HWTEST_F(MedicalJsTest, IsMatchType_005, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     napi_value result = nullptr;
     napi_get_boolean(env, true, &result);
@@ -181,9 +181,9 @@ HWTEST_F(AfeJsTest, IsMatchType_005, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: SR000FU58Q
  */
-HWTEST_F(AfeJsTest, GetNapiInt32_001, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetNapiInt32_001, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = INT32_MAX;
     
@@ -200,9 +200,9 @@ HWTEST_F(AfeJsTest, GetNapiInt32_001, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, GetNapiInt32_002, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetNapiInt32_002, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = INT32_MIN;
 
@@ -219,9 +219,9 @@ HWTEST_F(AfeJsTest, GetNapiInt32_002, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, GetNapiInt32_003, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetNapiInt32_003, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = (int32_t)true;
     
@@ -238,9 +238,9 @@ HWTEST_F(AfeJsTest, GetNapiInt32_003, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, GetNapiInt32_004, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetNapiInt32_004, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = (int32_t)false;
     
@@ -257,9 +257,9 @@ HWTEST_F(AfeJsTest, GetNapiInt32_004, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, GetNapiInt32_005, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetNapiInt32_005, TestSize.Level1)
 {
-    // Construction parameters    
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = (int32_t)'a';
     
@@ -276,9 +276,9 @@ HWTEST_F(AfeJsTest, GetNapiInt32_005, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, NapiGetNamedProperty_001, TestSize.Level1)
+HWTEST_F(MedicalJsTest, NapiGetNamedProperty_001, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     const char* tetScriptStr = "new Date();";
     napi_value testScript = nullptr;
@@ -299,7 +299,7 @@ HWTEST_F(AfeJsTest, NapiGetNamedProperty_001, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, NapiGetNamedProperty_002, TestSize.Level1)
+HWTEST_F(MedicalJsTest, NapiGetNamedProperty_002, TestSize.Level1)
 {
     // 定义变量 赋值
     napi_env env = (napi_env)engine_;
@@ -326,7 +326,7 @@ HWTEST_F(AfeJsTest, NapiGetNamedProperty_002, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000FU73V
  */
-HWTEST_F(AfeJsTest, NapiGetNamedProperty_003, TestSize.Level1)
+HWTEST_F(MedicalJsTest, NapiGetNamedProperty_003, TestSize.Level1)
 {
     // 定义变量 赋值
     napi_env env = (napi_env)engine_;
@@ -353,7 +353,7 @@ HWTEST_F(AfeJsTest, NapiGetNamedProperty_003, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, NapiGetNamedProperty_004, TestSize.Level1)
+HWTEST_F(MedicalJsTest, NapiGetNamedProperty_004, TestSize.Level1)
 {
     // 定义变量 赋值
     napi_env env = (napi_env)engine_;
@@ -380,7 +380,7 @@ HWTEST_F(AfeJsTest, NapiGetNamedProperty_004, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, NapiGetNamedProperty_005, TestSize.Level1)
+HWTEST_F(MedicalJsTest, NapiGetNamedProperty_005, TestSize.Level1)
 {
     // 定义变量 赋值
     napi_env env = (napi_env)engine_;
@@ -408,9 +408,9 @@ HWTEST_F(AfeJsTest, NapiGetNamedProperty_005, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt32_001, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt32_001, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = INT32_MAX;
     napi_value value;
@@ -427,9 +427,9 @@ HWTEST_F(AfeJsTest, GetCppInt32_001, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt32_002, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt32_002, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = INT32_MIN;
     napi_value value;
@@ -446,9 +446,9 @@ HWTEST_F(AfeJsTest, GetCppInt32_002, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt32_003, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt32_003, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = (int32_t)true;
     napi_value value;
@@ -465,7 +465,7 @@ HWTEST_F(AfeJsTest, GetCppInt32_003, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt32_004, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt32_004, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
@@ -483,9 +483,9 @@ HWTEST_F(AfeJsTest, GetCppInt32_004, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt32_005, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt32_005, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int32_t number = (int32_t)'b';
     napi_value value;
@@ -502,9 +502,9 @@ HWTEST_F(AfeJsTest, GetCppInt32_005, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt64_001, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt64_001, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     int64_t tmpInt64Max = 9007199254740991;//9223372036854775807;9007199254740992
     napi_env env = (napi_env)engine_;
     int64_t number = tmpInt64Max;//(int64_t)INT64_MAX;
@@ -522,9 +522,9 @@ HWTEST_F(AfeJsTest, GetCppInt64_001, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt64_002, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt64_002, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int64_t number = (int64_t)INT64_MIN;
     napi_value value;
@@ -541,9 +541,9 @@ HWTEST_F(AfeJsTest, GetCppInt64_002, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt64_003, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt64_003, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int64_t number = (int64_t)true;
     napi_value value;
@@ -561,9 +561,9 @@ HWTEST_F(AfeJsTest, GetCppInt64_003, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt64_004, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt64_004, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int64_t number = (int64_t)false;
     napi_value value;
@@ -579,9 +579,9 @@ HWTEST_F(AfeJsTest, GetCppInt64_004, TestSize.Level1)
  * @tc.type: FUNC
  * @tc.require: AR000G54IV
  */
-HWTEST_F(AfeJsTest, GetCppInt64_005, TestSize.Level1)
+HWTEST_F(MedicalJsTest, GetCppInt64_005, TestSize.Level1)
 {
-    // Construction parameters  
+    // Construction parameters
     napi_env env = (napi_env)engine_;
     int64_t number = (int64_t)'c';
     napi_value value;

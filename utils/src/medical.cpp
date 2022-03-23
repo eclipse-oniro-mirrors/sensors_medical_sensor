@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical.h"
+#include "medical_sensor.h"
 
 #include "medical_errors.h"
 #include "medical_log_domain.h"

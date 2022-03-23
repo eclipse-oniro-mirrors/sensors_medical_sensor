@@ -23,7 +23,7 @@ namespace Sensors {
 template<typename T>
 class DeathRecipientTemplate : public IRemoteObject::DeathRecipient {
 public:
-    explicit DeathRecipientTemplate(T &privateData) : privateData_(privateData){};
+    explicit DeathRecipientTemplate(T &privateData) : privateData_(privateData) {};
     virtual ~DeathRecipientTemplate() = default;
     virtual void OnRemoteDied(const wptr<IRemoteObject> &object)
     {

@@ -120,7 +120,6 @@ void EmitAsyncCallbackWork(AsyncCallbackInfo *asyncCallbackInfo)
 void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
 {
     uv_loop_s *loop(nullptr);
-    HiLog::Debug(LABEL, "%{public}s env: %{public}p", __func__, asyncCallbackInfo->env);
     napi_get_uv_event_loop(asyncCallbackInfo->env, &loop);
     if (loop == nullptr) {
         HiLog::Error(LABEL, "%{public}s loop is null", __func__);
@@ -169,7 +168,6 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
                 napi_set_element(env, message, j, num);
             }
             napi_set_named_property(env, result, sensorAttribute[i].c_str(), message);
-            HiLog::Error(LABEL, "%{public}s sensorData[0]=%{public}d", __func__, *(uint32_t *)message);
         }
 
         napi_call_function(env, undefined, callback, 1, &result, &callResult);

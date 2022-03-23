@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_client_stub.h"
+#include "medical_sensor_client_stub.h"
 
 #include "message_parcel.h"
 #include "medical_errors.h"
@@ -24,11 +24,13 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorClientStub" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorClientStub"
+};
 }
 
-int32_t MedicalSensorClientStub::OnRemoteRequest(uint32_t code, MessageParcel &data, MessageParcel &reply,
-                                          MessageOption &option)
+int32_t MedicalSensorClientStub::OnRemoteRequest(uint32_t code,
+    MessageParcel &data, MessageParcel &reply, MessageOption &option)
 {
     HiLog::Debug(LABEL, "%{public}s begin, cmd : %{public}u", __func__, code);
     return NO_ERROR;

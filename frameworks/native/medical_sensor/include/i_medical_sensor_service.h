@@ -19,10 +19,10 @@
 #include <vector>
 
 #include "errors.h"
-#include "i_medical_client.h"
+#include "i_medical_sensor_client.h"
 #include "iremote_broker.h"
-#include "medical.h"
-#include "medical_basic_data_channel.h"
+#include "medical_sensor.h"
+#include "medical_sensor_basic_data_channel.h"
 
 namespace OHOS {
 namespace Sensors {

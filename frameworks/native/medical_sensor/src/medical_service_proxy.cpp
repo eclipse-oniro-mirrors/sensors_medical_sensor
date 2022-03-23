@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_service_proxy.h"
+#include "medical_sensor_service_proxy.h"
 
 #include <vector>
 
@@ -26,17 +26,21 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
-namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceProxy" };
-constexpr int32_t MAX_SENSOR_COUNT = 200;
-enum {
+enum class FlushCmdId {
     FLUSH = 0,
     SET_MODE,
     RESERVED,
 };
+
+namespace {
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceProxy"
+};
+constexpr int32_t MAX_SENSOR_COUNT = 200;
 }  // namespace
 
-MedicalSensorServiceProxy::MedicalSensorServiceProxy(const sptr<IRemoteObject> &impl) : IRemoteProxy<IMedicalSensorService>(impl)
+MedicalSensorServiceProxy::MedicalSensorServiceProxy(const sptr<IRemoteObject> &impl)
+    : IRemoteProxy<IMedicalSensorService>(impl)
 {}
 
 ErrCode MedicalSensorServiceProxy::EnableSensor(uint32_t sensorId, int64_t samplingPeriodNs, int64_t maxReportDelayNs)
@@ -138,7 +142,7 @@ int32_t MedicalSensorServiceProxy::GetSensorState(uint32_t sensorId)
 
 ErrCode MedicalSensorServiceProxy::RunCommand(uint32_t sensorId, uint32_t cmdType, uint32_t params)
 {
-    if (cmdType > RESERVED) {
+    if (cmdType > static_cast<uint32_t>(FlushCmdId::RESERVED)) {
         HiLog::Error(LABEL, "%{public}s failed, cmdType : %{public}u", __func__, cmdType);
         return CMD_TYPE_ERR;
     }
@@ -202,8 +206,8 @@ std::vector<MedicalSensor> MedicalSensorServiceProxy::GetSensorList()
     return sensors;
 }
 
-ErrCode MedicalSensorServiceProxy::TransferDataChannel(const sptr<MedicalSensorBasicDataChannel> &sensorBasicDataChannel,
-                                                const sptr<IRemoteObject> &afeClient)
+ErrCode MedicalSensorServiceProxy::TransferDataChannel(
+    const sptr<MedicalSensorBasicDataChannel> &sensorBasicDataChannel, const sptr<IRemoteObject> &afeClient)
 {
     HiLog::Debug(LABEL, "%{public}s sendFd: %{public}d", __func__, sensorBasicDataChannel->GetSendDataFd());
     if (sensorBasicDataChannel == nullptr || afeClient == nullptr) {

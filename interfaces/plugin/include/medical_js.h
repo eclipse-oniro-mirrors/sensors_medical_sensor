@@ -12,8 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef MEDICAL_SENSOR_JS_H
+#define MEDICAL_SENSOR_JS_H
+
 #include "medical_native_impl.h"
 
 static int32_t UnsubscribeSensor(int32_t sensorTypeId);
 static void DataCallbackImpl(SensorEvent *event);
 static int32_t SubscribeSensor(int32_t sensorTypeId, int64_t interval, const MedicalSensorUser *user);
+#endif // MEDICAL_SENSOR_JS_H

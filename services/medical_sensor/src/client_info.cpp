@@ -611,7 +611,6 @@ void ClientInfo::GetSensorChannelInfo(std::vector<MedicalSensorChannelInfo> &cha
                 continue;
             }
             channel.SetUid(uid);
-            // BundleManager bundleManager_;
             std::string packageName("");
             channel.SetSensorId(sensorIt.first);
             channel.SetPackageName(packageName);

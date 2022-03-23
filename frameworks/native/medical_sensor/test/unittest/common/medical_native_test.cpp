@@ -18,8 +18,8 @@
 #include <thread>
 
 #include "medical_native_type.h"
-#include "medical_data_channel.h"
-#include "medical_service_client.h"
+#include "medical_sensor_data_channel.h"
+#include "medical_sensor_service_client.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
@@ -29,10 +29,10 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeNativeTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "MedicalNativeTest" };
 }
 
-class AfeNativeTest : public testing::Test {
+class MedicalNativeTest : public testing::Test {
 public:
     static void SetUpTestCase();
     static void TearDownTestCase();
@@ -45,14 +45,15 @@ public:
     std::unique_ptr<MedicalSensorServiceClient> afeServiceClient_;
     bool dataReport_;
 };
-void AfeNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *data)
+void MedicalNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *data)
 {
     ASSERT_NE(events, nullptr);
     HiLog::Info(LABEL, "%{public}s start,num : %{public}d", __func__, num);
-    AfeNativeTest *test = reinterpret_cast<AfeNativeTest *>(data);
+    MedicalNativeTest *test = reinterpret_cast<MedicalNativeTest *>(data);
     ASSERT_NE(test, nullptr);
     for (int32_t i = 0; i < num; i++) {
-        HiLog::Info(LABEL, "%{public}s sensorTypeId = %{public}d, data->sensorid = %{public}u", __func__, events[i].sensorTypeId, test->afeId_);
+        HiLog::Info(LABEL, "%{public}s sensorTypeId = %{public}d, data->sensorid = %{public}u",
+            __func__, events[i].sensorTypeId, test->afeId_);
         if (events[i].sensorTypeId == (int32_t)test->afeId_) {
             HiLog::Info(LABEL, "%{public}s got report data, set test->dataReport_ = true", __func__);
             test->dataReport_ = true;
@@ -60,13 +61,13 @@ void AfeNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *d
     }
     return;
 }
-void AfeNativeTest::SetUpTestCase()
+void MedicalNativeTest::SetUpTestCase()
 {}
 
-void AfeNativeTest::TearDownTestCase()
+void MedicalNativeTest::TearDownTestCase()
 {}
 
-void AfeNativeTest::SetUp()
+void MedicalNativeTest::SetUp()
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     afeDataChannel_ = new (std::nothrow) MedicalSensorDataChannel();
@@ -83,7 +84,7 @@ void AfeNativeTest::SetUp()
     dataReport_ = false;
 }
 
-void AfeNativeTest::TearDown()
+void MedicalNativeTest::TearDown()
 {
     afeServiceClient_->DestroyDataChannel();
     afeDataChannel_->DestroySensorDataChannel();
@@ -94,10 +95,10 @@ void AfeNativeTest::TearDown()
  * @tc.desc: get afe list
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, GetSensorList_001, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, GetSensorList_001, TestSize.Level0)
 {
     bool ret = afesList_.empty();
-    HiLog::Info(LABEL, "GetSensorList_001,count : %{public}d!", int{ afesList_.size() });
+    HiLog::Info(LABEL, "GetSensorList_001,count : %{public}d!", int { afesList_.size() });
     ASSERT_EQ(ret, false);
 }
 
@@ -106,7 +107,7 @@ HWTEST_F(AfeNativeTest, GetSensorList_001, TestSize.Level0)
  * @tc.desc: Judge afe info
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, GetSensorList_002, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, GetSensorList_002, TestSize.Level0)
 {
     for (const auto &it : afesList_) {
         ASSERT_EQ(it.GetSensorId() == 0 || it.GetSensorId() == 129, true);
@@ -121,7 +122,7 @@ HWTEST_F(AfeNativeTest, GetSensorList_002, TestSize.Level0)
  * @tc.desc: disable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, SensorOperation_001, TestSize.Level1)
+HWTEST_F(MedicalNativeTest, SensorOperation_001, TestSize.Level1)
 {
     HiLog::Info(LABEL, "SensorOperation_001 begin");
     uint64_t samplingPeriodNs = 10000000;
@@ -146,7 +147,7 @@ HWTEST_F(AfeNativeTest, SensorOperation_001, TestSize.Level1)
  * @tc.desc: do client afe send data channel close
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, ClientAfeDataChannel_001, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, ClientAfeDataChannel_001, TestSize.Level0)
 {
     int32_t ret = afeDataChannel_->GetSendDataFd();
     HiLog::Info(LABEL, "ClientAfeDataChannel_001,ret : %{public}d!", ret);
@@ -158,7 +159,7 @@ HWTEST_F(AfeNativeTest, ClientAfeDataChannel_001, TestSize.Level0)
  * @tc.desc: judge channel fd when create channel
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, ClientAfeDataChannel_002, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, ClientAfeDataChannel_002, TestSize.Level0)
 {
     int32_t ret = afeDataChannel_->GetReceiveDataFd();
     ASSERT_EQ((ret >= 0), true);
@@ -169,7 +170,7 @@ HWTEST_F(AfeNativeTest, ClientAfeDataChannel_002, TestSize.Level0)
  * @tc.desc: Judge read thread status when Destroy Channel
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, ClientAfeDataChannel_003, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, ClientAfeDataChannel_003, TestSize.Level0)
 {
     int32_t ret = afeDataChannel_->DestroySensorDataChannel();
     ASSERT_EQ(ret, ERR_OK);
@@ -180,7 +181,7 @@ HWTEST_F(AfeNativeTest, ClientAfeDataChannel_003, TestSize.Level0)
  * @tc.desc: Destroy ClientAfeDataChannel
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, ClientAfeDataChannel_004, TestSize.Level0)
+HWTEST_F(MedicalNativeTest, ClientAfeDataChannel_004, TestSize.Level0)
 {
     int32_t ret = afeDataChannel_->DestroySensorDataChannel();
     ASSERT_EQ(ret, ERR_OK);

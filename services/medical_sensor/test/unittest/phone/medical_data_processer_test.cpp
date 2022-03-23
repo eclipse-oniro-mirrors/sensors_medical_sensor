@@ -19,8 +19,8 @@
 #include <thread>
 
 #include "report_data_cache.h"
-#include "medical_data_channel.h"
-#include "medical_service_client.h"
+#include "medical_sensor_data_channel.h"
+#include "medical_sensor_service_client.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 

@@ -16,7 +16,6 @@
 #ifndef SENSOR_CHANNEL_INFO_H
 #define SENSOR_CHANNEL_INFO_H
 
-#include <cstdint>
 #include <string>
 #include <vector>
 

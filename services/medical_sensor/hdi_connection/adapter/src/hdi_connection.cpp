@@ -30,7 +30,9 @@ using OHOS::HDI::Sensor::V1_0::ISensorInterface;
 using OHOS::HDI::Sensor::V1_0::ISensorCallback;
 using OHOS::HDI::Sensor::V1_0::HdfSensorInformation;
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_ADAPTOR, "MedicalSensor_HdiConnection" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_ADAPTOR, "MedicalSensor_HdiConnection"
+};
 sptr<ISensorInterface> sensorInterface_ = nullptr;
 sptr<ISensorCallback> eventCallback_ = nullptr;
 std::map<int32_t, MedicalSensorBasicInfo> sensorBasicInfoMap_;

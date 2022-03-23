@@ -26,7 +26,6 @@
 
 namespace OHOS {
 namespace Sensors {
-
 struct MedicalThreadInfo {
     int32_t pid;
     int32_t uid;

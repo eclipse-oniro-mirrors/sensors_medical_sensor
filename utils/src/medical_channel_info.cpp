@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_channel_info.h"
+#include "medical_sensor_channel_info.h"
 
 namespace OHOS {
 namespace Sensors {

@@ -23,7 +23,7 @@
 #include <gtest/gtest.h>
 #include "ipc_skeleton.h"
 #include "iservice_registry.h"
-#include "medical_service_proxy.h"
+#include "medical_sensor_service_proxy.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 #include "string_ex.h"

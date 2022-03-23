@@ -26,7 +26,7 @@
 #include "flush_info_record.h"
 #include "nocopyable.h"
 #include "report_data_cache.h"
-#include "medical.h"
+#include "medical_sensor.h"
 #include "medical_log_domain.h"
 #include "sensor_hdi_connection.h"
 #include "medical_native_type.h"
@@ -48,11 +48,13 @@ private:
     bool ReportNotContinuousData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
                                  sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event);
     void SendNoneFifoCacheData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                               sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event, uint64_t periodCount);
+                               sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event,
+                               uint64_t periodCount);
     void SendFifoCacheData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
-                           sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event, uint64_t periodCount,
-                           uint64_t fifoCount);
-    void SendRawData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf, sptr<MedicalSensorBasicDataChannel> channel,
+                           sptr<MedicalSensorBasicDataChannel> &channel, struct SensorEvent &event,
+                           uint64_t periodCount, uint64_t fifoCount);
+    void SendRawData(std::unordered_map<uint32_t, struct SensorEvent> &cacheBuf,
+                     sptr<MedicalSensorBasicDataChannel> channel,
                      std::vector<struct SensorEvent> event);
     void EventFilter(struct CircularEventBuf &eventsBuf);
     bool CheckSendDataPermission(sptr<MedicalSensorBasicDataChannel> channel, uint32_t sensorId);

@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-#include "medical_basic_info.h"
+#include "medical_sensor_basic_info.h"
 
 namespace OHOS {
 namespace Sensors {
-MedicalSensorBasicInfo::MedicalSensorBasicInfo() : samplingPeriodNs_(0L), maxReportDelayNs_(0L), sensorState_(SENSOR_DISABLED)
+MedicalSensorBasicInfo::MedicalSensorBasicInfo()
+    : samplingPeriodNs_(0L), maxReportDelayNs_(0L), sensorState_(SENSOR_DISABLED)
 {}
 
 int64_t MedicalSensorBasicInfo::GetSamplingPeriodNs() const
