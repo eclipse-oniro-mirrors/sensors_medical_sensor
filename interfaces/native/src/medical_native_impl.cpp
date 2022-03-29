@@ -18,8 +18,8 @@
 #include "securec.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
-#include "medical_service_client.h"
-#include "medical_data_channel.h"
+#include "medical_sensor_service_client.h"
+#include "medical_sensor_data_channel.h"
 
 using OHOS::HiviewDFX::HiLog;
 using OHOS::HiviewDFX::HiLogLabel;
@@ -112,6 +112,7 @@ static int32_t DestroyAfeDataChannel()
     }
     g_isChannelCreated = false;
     delete g_dataChannel;
+    g_dataChannel = nullptr;
     return SUCCESS;
 }
 

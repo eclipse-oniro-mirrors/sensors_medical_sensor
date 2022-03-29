@@ -24,7 +24,9 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_INTERFACE, "MedicalSensor_SensorHdiConnection" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_INTERFACE, "MedicalSensor_SensorHdiConnection"
+};
 }
 
 int32_t SensorHdiConnection::ConnectHdi()

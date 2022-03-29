@@ -39,9 +39,7 @@ std::map<int32_t, int64_t> DmdReport::eventMap_ = {
     { MISC_SERVICE_EXCEPTION, 0 },
     { SENSOR_SERVICE_IPC_EXCEPTION, 0 },
     { MISC_SERVICE_IPC_EXCEPTION, 0 },
-    { SENSOR_HIDL_SERVICE_EXCEPTION, 0 },
-    { LIGHT_HIDL_SERVICE_EXCEPTION, 0 },
-    { VIBRATOR_HIDL_SERVICE_EXCEPTION, 0 },
+    { SENSOR_HDF_SERVICE_EXCEPTION, 0 },
     { SENSOR_DATA_CHANNEL_EXCEPTION, 0 },
 };
 
@@ -66,12 +64,8 @@ static std::string GetEventName(int32_t eventId)
             return "SensorServiceIpcException";
         case MISC_SERVICE_IPC_EXCEPTION:
             return "MiscServiceIpcException";
-        case SENSOR_HIDL_SERVICE_EXCEPTION:
+        case SENSOR_HDF_SERVICE_EXCEPTION:
             return "SensorHidlServiceException";
-        case LIGHT_HIDL_SERVICE_EXCEPTION:
-            return "LightHidlServiceException";
-        case VIBRATOR_HIDL_SERVICE_EXCEPTION:
-            return "VibratorHidlServiceException";
         case SENSOR_DATA_CHANNEL_EXCEPTION:
             return "SensorDataChannelException";
         default:
@@ -92,7 +86,8 @@ void DmdReport::ReportException(int32_t eventId, const std::string &interfaceNam
     if ((curTime - eventIt->second) > SECONDS_HALF_HOUR) {
         HiviewDFX::HiSysEvent::Write(HiviewDFX::HiSysEvent::Domain::SENSORS, GetEventName(eventId),
             HiviewDFX::HiSysEvent::EventType::FAULT, interfaceName, error);
-        HiLog::Error(LABEL, "%{public}s eventId : %{public}d, interfaceName=%{public}s, error=%{public}d", __func__, eventId, interfaceName.c_str(), error);
+        HiLog::Error(LABEL, "%{public}s eventId : %{public}d, interfaceName=%{public}s, error=%{public}d",
+            __func__, eventId, interfaceName.c_str(), error);
         eventMap_[eventId] = curTime;
         HiLog::Debug(LABEL, "%{public}s end", __func__);
         return;

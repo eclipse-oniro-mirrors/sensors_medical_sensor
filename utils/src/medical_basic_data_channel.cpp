@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_basic_data_channel.h"
+#include "medical_sensor_basic_data_channel.h"
 
 #include <fcntl.h>
 #include <sys/socket.h>
@@ -33,7 +33,8 @@ constexpr int32_t DEFAULT_CHANNEL_SIZE = 2 * 1024;
 constexpr int32_t SOCKET_PAIR_SIZE = 2;
 }  // namespace
 
-MedicalSensorBasicDataChannel::MedicalSensorBasicDataChannel() : sendFd_(INVALID_FD), receiveFd_(INVALID_FD), isActive_(false)
+MedicalSensorBasicDataChannel::MedicalSensorBasicDataChannel()
+    : sendFd_(INVALID_FD), receiveFd_(INVALID_FD), isActive_(false)
 {
     HiLog::Debug(LABEL, "%{public}s isActive_ : %{public}d, sendFd: %{public}d", __func__, isActive_, sendFd_);
 }

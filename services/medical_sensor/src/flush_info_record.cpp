@@ -22,14 +22,15 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
-namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "FlushInfoRecord" };
-constexpr int32_t CHANNEL_NO_FLUSH = -1;
-enum {
+enum class FlushCmdId {
     FLUSH = 0,
     SET_MODE,
     RESERVED,
 };
+
+namespace {
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "FlushInfoRecord" };
+constexpr int32_t CHANNEL_NO_FLUSH = -1;
 }  // namespace
 
 std::unordered_map<uint32_t, std::vector<struct FlushInfo>> FlushInfoRecord::GetFlushInfo()
@@ -48,7 +49,8 @@ void FlushInfoRecord::ClearFlushInfoItem(uint32_t sensorId)
     }
 }
 
-ErrCode FlushInfoRecord::SetFlushInfo(uint32_t sensorId, const sptr<MedicalSensorBasicDataChannel> &channel, bool isFirstFlush)
+ErrCode FlushInfoRecord::SetFlushInfo(uint32_t sensorId,
+    const sptr<MedicalSensorBasicDataChannel> &channel, bool isFirstFlush)
 {
     HiLog::Debug(LABEL, "%{public}s, sensorId : %{public}u", __func__, sensorId);
     if (channel == nullptr) {
@@ -99,7 +101,7 @@ int32_t FlushInfoRecord::GetFlushChannelIndex(const std::vector<struct FlushInfo
 ErrCode FlushInfoRecord::FlushProcess(const uint32_t sensorId, const uint32_t flag, const int32_t pid,
                                       const bool isEnableFlush)
 {
-    auto ret = sensorHdiConnection_.RunCommand(sensorId, FLUSH, 0);
+    auto ret = sensorHdiConnection_.RunCommand(sensorId, static_cast<int32_t>(FlushCmdId::FLUSH), 0);
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s flush command failed", __func__);
         return ret;

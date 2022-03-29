@@ -26,10 +26,10 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeNativeTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "MedicalNativeTest" };
 }  // namespace
 
-class AfeNativeTest : public testing::Test {
+class MedicalNativeTest : public testing::Test {
 public:
     static void SetUpTestCase();
     static void TearDownTestCase();
@@ -37,16 +37,16 @@ public:
     void TearDown();
 };
 
-void AfeNativeTest::SetUpTestCase()
+void MedicalNativeTest::SetUpTestCase()
 {}
 
-void AfeNativeTest::TearDownTestCase()
+void MedicalNativeTest::TearDownTestCase()
 {}
 
-void AfeNativeTest::SetUp()
+void MedicalNativeTest::SetUp()
 {}
 
-void AfeNativeTest::TearDown()
+void MedicalNativeTest::TearDown()
 {}
 
 void AfeDataCallbackImpl(SensorEvent *event)
@@ -57,7 +57,7 @@ void AfeDataCallbackImpl(SensorEvent *event)
     }
     uint32_t *sensorData = (uint32_t *)(event[0].data);
     HiLog::Info(LABEL, "AfeDataCallbackImpl sensorTypeId: %{public}d, dataLen: %{public}d, data[0]: %{public}d\n",
-		event[0].sensorTypeId, event[0].dataLen, *(sensorData));
+        event[0].sensorTypeId, event[0].dataLen, *(sensorData));
 }
 
 /*
@@ -66,7 +66,7 @@ void AfeDataCallbackImpl(SensorEvent *event)
  * @tc.type: FUNC
  * @tc.author: wuzhihui
  */
-HWTEST_F(AfeNativeTest, AfeNativeApiTest_001, TestSize.Level1)
+HWTEST_F(MedicalNativeTest, AfeNativeApiTest_001, TestSize.Level1)
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
 

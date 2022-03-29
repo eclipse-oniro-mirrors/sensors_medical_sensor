@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_service_client.h"
+#include "medical_sensor_service_client.h"
 
 #include <sys/socket.h>
 #include <thread>
@@ -23,7 +23,7 @@
 #include "death_recipient_template.h"
 #include "dmd_report.h"
 #include "ipc_skeleton.h"
-#include "medical_service_proxy.h"
+#include "medical_sensor_service_proxy.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 #include "system_ability_definition.h"
@@ -33,7 +33,9 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceClient" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MedicalSensorServiceClient"
+};
 constexpr int32_t GET_SERVICE_MAX_COUNT = 30;
 constexpr uint32_t WAIT_MS = 200;
 }  // namespace
@@ -56,10 +58,12 @@ int32_t MedicalSensorServiceClient::InitServiceClient()
     }
     int32_t retry = 0;
     while (retry < GET_SERVICE_MAX_COUNT) {
-        afeServer_ = iface_cast<IMedicalSensorService>(systemAbilityManager->GetSystemAbility(MEDICAL_SENSOR_SERVICE_ABILITY_ID));
+        afeServer_ = iface_cast<IMedicalSensorService>(
+            systemAbilityManager->GetSystemAbility(MEDICAL_SENSOR_SERVICE_ABILITY_ID));
         if (afeServer_ != nullptr) {
             HiLog::Debug(LABEL, "%{public}s get service success, retry : %{public}d", __func__, retry);
-            serviceDeathObserver_ = new (std::nothrow) DeathRecipientTemplate(*const_cast<MedicalSensorServiceClient *>(this));
+            serviceDeathObserver_ =
+                new (std::nothrow) DeathRecipientTemplate(*const_cast<MedicalSensorServiceClient *>(this));
             if (serviceDeathObserver_ != nullptr) {
                 afeServer_->AsObject()->AddDeathRecipient(serviceDeathObserver_);
             }

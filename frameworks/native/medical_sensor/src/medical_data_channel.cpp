@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_data_channel.h"
+#include "medical_sensor_data_channel.h"
 
 #include <cerrno>
 #include <unistd.h>

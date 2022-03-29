@@ -22,7 +22,7 @@
 
 #include "client_info.h"
 #include "refbase.h"
-#include "medical_basic_data_channel.h"
+#include "medical_sensor_basic_data_channel.h"
 #include "sensor_hdi_connection.h"
 #include "medical_errors.h"
 #include "singleton.h"
@@ -36,7 +36,7 @@ struct FlushInfo {
     bool flushFromEnable;
 
     FlushInfo(const sptr<MedicalSensorBasicDataChannel> &channel, bool enableFlush)
-        : flushChannel(channel), flushFromEnable(enableFlush){};
+        : flushChannel(channel), flushFromEnable(enableFlush) {};
 };
 
 class FlushInfoRecord : public Singleton<FlushInfoRecord> {

@@ -22,7 +22,7 @@
 
 #include "client_info.h"
 #include "flush_info_record.h"
-#include "medical_data_processer.h"
+#include "medical_sensor_data_processer.h"
 #include "sensor_hdi_connection.h"
 #include "medical_native_type.h"
 
@@ -37,7 +37,8 @@ public:
     MedicalSensorBasicInfo GetSensorInfo(uint32_t sensorId, int64_t samplingPeriodNs, int64_t maxReportDelayNs);
     bool IsOtherClientUsingSensor(uint32_t sensorId, int32_t clientPid);
     ErrCode AfterDisableSensor(uint32_t sensorId);
-    void InitSensorMap(std::unordered_map<uint32_t, MedicalSensor> &sensorMap, sptr<MedicalSensorDataProcesser> dataProcesser,
+    void InitSensorMap(std::unordered_map<uint32_t, MedicalSensor> &sensorMap,
+                       sptr<MedicalSensorDataProcesser> dataProcesser,
                        sptr<ReportDataCache> dataCache);
     uint32_t GetSensorFlag(uint32_t sensorId);
     void GetPackageNameFromUid(int32_t uid, std::string &packageName);

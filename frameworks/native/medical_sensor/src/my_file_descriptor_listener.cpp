@@ -28,12 +28,12 @@ using namespace OHOS::AppExecFwk;
 namespace {
 constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_FRAMEWORK, "MyFileDescriptorListener" };
 constexpr int32_t RECEIVE_DATA_SIZE = 100;
+constexpr int32_t maxLen = sizeof(struct TransferMedicalSensorEvents) * RECEIVE_DATA_SIZE;
 }  // namespace
 
 MyFileDescriptorListener::MyFileDescriptorListener()
     :channel_(nullptr),
-     receiveDataBuff_(
-        new (std::nothrow) TransferMedicalSensorEvents[sizeof(struct TransferMedicalSensorEvents) * RECEIVE_DATA_SIZE])
+     receiveDataBuff_(new (std::nothrow) TransferMedicalSensorEvents[maxLen])
 {}
 
 void MyFileDescriptorListener::OnReadable(int32_t fileDescriptor)
@@ -46,11 +46,9 @@ void MyFileDescriptorListener::OnReadable(int32_t fileDescriptor)
 
     FileDescriptorListener::OnReadable(fileDescriptor);
     if (receiveDataBuff_ == nullptr) {
-        receiveDataBuff_ =
-            new (std::nothrow) TransferMedicalSensorEvents[sizeof(struct TransferMedicalSensorEvents) * RECEIVE_DATA_SIZE];
+        receiveDataBuff_ = new (std::nothrow) TransferMedicalSensorEvents[maxLen];
     }
-    int32_t len =
-        recv(fileDescriptor, receiveDataBuff_, sizeof(struct TransferMedicalSensorEvents) * RECEIVE_DATA_SIZE, NULL);
+    int32_t len = recv(fileDescriptor, receiveDataBuff_, maxLen, NULL);
     int32_t eventSize = sizeof(struct TransferMedicalSensorEvents);
     while (len > 0) {
         int32_t num = len / eventSize;
@@ -65,11 +63,11 @@ void MyFileDescriptorListener::OnReadable(int32_t fileDescriptor)
             };
             channel_->dataCB_(&event, 1, channel_->privateData_);
         }
-        len = recv(fileDescriptor, receiveDataBuff_, sizeof(struct TransferMedicalSensorEvents) * RECEIVE_DATA_SIZE, NULL);
+        len = recv(fileDescriptor, receiveDataBuff_, maxLen, NULL);
     }
 }
 
-void MyFileDescriptorListener::OnWritable(int32_t fileDescriptor){}
+void MyFileDescriptorListener::OnWritable(int32_t fileDescriptor) {}
 
 void MyFileDescriptorListener::SetChannel(MedicalSensorDataChannel* channel)
 {

@@ -182,7 +182,7 @@ static napi_value Off(napi_env env, napi_callback_info info)
         NAPI_ASSERT(env, handler == napi_function, "type mismatch for parameter 2");
     } else {
         NAPI_ASSERT(env, g_onCallbackInfos.find(sensorTypeId) != g_onCallbackInfos.end(), "no callback registered");
-        napi_get_reference_value(env, g_onCallbackInfos[sensorTypeId]->callback[0], &args[1]);        
+        napi_get_reference_value(env, g_onCallbackInfos[sensorTypeId]->callback[0], &args[1]);
     }
     napi_create_reference(env, args[1], 1, &asyncCallbackInfo->callback[0]);
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_service.h"
+#include "medical_sensor_service.h"
 
 #include <cinttypes>
 #include <sys/socket.h>
@@ -23,8 +23,8 @@
 #include "iservice_registry.h"
 #include "permission_util.h"
 #include "securec.h"
-#include "medical.h"
-#include "medical_dump.h"
+#include "medical_sensor.h"
+#include "medical_sensor_dump.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 #include "system_ability_definition.h"
@@ -33,6 +33,12 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
+enum class FlushCmdId {
+    FLUSH = 0,
+    SET_MODE,
+    RESERVED,
+};
+
 namespace {
 constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorService" };
 constexpr uint32_t INVALID_SENSOR_ID = -1;
@@ -40,11 +46,6 @@ constexpr int32_t INVALID_PID = -1;
 constexpr int64_t MAX_EVENT_COUNT = 1000;
 constexpr uint32_t REPORT_STATUS_LEN = 20;
 int32_t g_sendFd = 0;
-enum {
-    FLUSH = 0,
-    SET_MODE,
-    RESERVED,
-};
 }  // namespace
 
 REGISTER_SYSTEM_ABILITY_BY_ID(MedicalSensorService, MEDICAL_SENSOR_SERVICE_ABILITY_ID, true);
@@ -133,7 +134,8 @@ bool MedicalSensorService::InitSensorList()
     std::lock_guard<std::mutex> sensorMapLock(sensorMapMutex_);
     for (const auto &it : sensors_) {
         sensorMap_.insert(std::make_pair(it.GetSensorId(), it));
-        HiLog::Debug(LABEL, "%{public}s sensorId = %{public}d, name = %{public}s", __func__, it.GetSensorId(), it.GetName().c_str());
+        HiLog::Debug(LABEL, "%{public}s sensorId = %{public}d, name = %{public}s",
+            __func__, it.GetSensorId(), it.GetName().c_str());
     }
 
     return true;
@@ -232,7 +234,7 @@ ErrCode MedicalSensorService::SaveSubscriber(uint32_t sensorId, int64_t sampling
 
 ErrCode MedicalSensorService::EnableSensor(uint32_t sensorId, int64_t samplingPeriodNs, int64_t maxReportDelayNs)
 {
-    HiLog::Debug(LABEL, "%{public}s begin, sensorId : %{public}u, samplingPeriodNs : %{public}" 
+    HiLog::Debug(LABEL, "%{public}s begin, sensorId : %{public}u, samplingPeriodNs : %{public}"
         PRId64, __func__, sensorId, samplingPeriodNs);
     if ((sensorId == INVALID_SENSOR_ID) ||
         ((samplingPeriodNs != 0L) && ((maxReportDelayNs / samplingPeriodNs) > MAX_EVENT_COUNT))) {
@@ -335,13 +337,15 @@ int32_t MedicalSensorService::GetSensorState(uint32_t sensorId)
 ErrCode MedicalSensorService::RunCommand(uint32_t sensorId, uint32_t cmdType, uint32_t params)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
-    if (sensorId == INVALID_SENSOR_ID || ((cmdType != FLUSH) && (cmdType != SET_MODE))) {
+    if (sensorId == INVALID_SENSOR_ID ||
+        ((cmdType != static_cast<uint32_t>(FlushCmdId::FLUSH)) &&
+         (cmdType != static_cast<uint32_t>(FlushCmdId::SET_MODE)))) {
         HiLog::Error(LABEL, "%{public}s sensorId or cmd is invalid", __func__);
         return ERR_NO_INIT;
     }
     std::lock_guard<std::mutex> serviceLock(serviceLock_);
     uint32_t flag = sensorManager_.GetSensorFlag(sensorId);
-    if (cmdType == FLUSH) {
+    if (cmdType == static_cast<uint32_t>(FlushCmdId::FLUSH)) {
         int32_t pid = this->GetCallingPid();
         HiLog::Info(LABEL, "%{public}s sensorId : %{public}u, flag : %{public}u", __func__, sensorId, flag);
         auto retFlush = flushInfo_.FlushProcess(sensorId, flag, pid, false);
@@ -377,7 +381,7 @@ std::vector<MedicalSensor> MedicalSensorService::GetSensorList()
 }
 
 ErrCode MedicalSensorService::TransferDataChannel(const sptr<MedicalSensorBasicDataChannel> &sensorBasicDataChannel,
-                                           const sptr<IRemoteObject> &afeClient)
+    const sptr<IRemoteObject> &afeClient)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
     g_sendFd = sensorBasicDataChannel->GetSendDataFd();
@@ -454,7 +458,6 @@ void MedicalSensorService::RegisterClientDeathRecipient(sptr<IRemoteObject> afeC
     }
 
     afeClient->AddDeathRecipient(clientDeathObserver_);
-//    client->AsObject()->AddDeathRecipient(clientDeathObserver_);
     HiLog::Info(LABEL, "%{public}s add clientDeathObserver_", __func__);
 
     clientInfo_.SaveClientPid(afeClient, pid);
@@ -471,7 +474,6 @@ void MedicalSensorService::UnregisterClientDeathRecipient(sptr<IRemoteObject> af
         return;
     }
     afeClient->RemoveDeathRecipient(clientDeathObserver_);
-//    client->AsObject()->RemoveDeathRecipient(clientDeathObserver_);
     clientInfo_.DestroyClientPid(afeClient);
     HiLog::Info(LABEL, "%{public}s end", __func__);
 }

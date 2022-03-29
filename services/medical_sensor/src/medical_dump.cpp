@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "medical_dump.h"
+#include "medical_sensor_dump.h"
 
 #include <cinttypes>
 #include <ctime>
@@ -25,17 +25,18 @@
 namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
+
+enum class DumpDataSizeType {
+    PPG_DATA_SIZE = 400,
+    COMMON_DATA_SIZE = 1,
+};
+
 namespace {
 constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_SERVICE, "MedicalSensorDump" };
 constexpr uint32_t MAX_DUMP_DATA_SIZE = 10;
 constexpr uint32_t MS_NS = 1000000;
 constexpr uint32_t PPG = 256;
 constexpr int32_t MAX_DMUP_PARAM = 2;
-
-enum {
-    PPG_DATA_SIZE = 400,
-    COMMON_DATA_SIZE = 1,
-};
 }  // namespace
 
 std::unordered_map<uint32_t, std::string> MedicalSensorDump::sensorMap_ = {
@@ -62,7 +63,8 @@ void MedicalSensorDump::DumpHelp(int32_t fd)
     dprintf(fd, "      -d: dump the last 10 packages sensor data\n");
 }
 
-bool MedicalSensorDump::DumpSensorList(int32_t fd, const std::vector<MedicalSensor> &sensors, const std::vector<std::u16string> &args)
+bool MedicalSensorDump::DumpSensorList(int32_t fd,
+    const std::vector<MedicalSensor> &sensors, const std::vector<std::u16string> &args)
 {
     if ((args.empty()) || (args[0].compare(u"-l") != 0)) {
         HiLog::Error(LABEL, "%{public}s args cannot be empty or invalid", __func__);
@@ -108,8 +110,8 @@ bool MedicalSensorDump::DumpSensorChannel(int32_t fd, ClientInfo &clientInfo, co
     return true;
 }
 
-bool MedicalSensorDump::DumpOpeningSensor(int32_t fd, const std::vector<MedicalSensor> &sensors, ClientInfo &clientInfo,
-                                   const std::vector<std::u16string> &args)
+bool MedicalSensorDump::DumpOpeningSensor(int32_t fd, const std::vector<MedicalSensor> &sensors,
+    ClientInfo &clientInfo, const std::vector<std::u16string> &args)
 {
     if ((args.empty()) || (args[0].compare(u"-o") != 0)) {
         HiLog::Error(LABEL, "%{public}s args cannot be empty or invalid", __func__);
@@ -172,9 +174,9 @@ int32_t MedicalSensorDump::DataSizeBySensorId(uint32_t sensorId)
 {
     switch (sensorId) {
         case PPG:
-            return PPG_DATA_SIZE;
+            return static_cast<int32_t>(DumpDataSizeType::PPG_DATA_SIZE);
         default:
-            return COMMON_DATA_SIZE;
+            return static_cast<int32_t>(DumpDataSizeType::COMMON_DATA_SIZE);
     }
 }
 
@@ -191,7 +193,7 @@ std::string MedicalSensorDump::GetDataBySensorId(uint32_t sensorId, struct Senso
 }
 
 int32_t MedicalSensorDump::Dump(int32_t fd, const std::vector<std::u16string> &args,
-                       std::vector<MedicalSensor> &sensors, ClientInfo &clientInfo)
+    std::vector<MedicalSensor> &sensors, ClientInfo &clientInfo)
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
 

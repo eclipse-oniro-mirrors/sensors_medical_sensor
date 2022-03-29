@@ -22,7 +22,9 @@ namespace OHOS {
 namespace Sensors {
 using namespace OHOS::HiviewDFX;
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_ADAPTOR, "MedicalSensor_HdiConnection" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_ADAPTOR, "MedicalSensor_HdiConnection"
+};
 std::unique_ptr<HdiConnection> HdiConnection_ = std::make_unique<HdiConnection>();
 }
 int32_t SensorEventCallback::OnDataEvent(const HdfSensorEvents& event)

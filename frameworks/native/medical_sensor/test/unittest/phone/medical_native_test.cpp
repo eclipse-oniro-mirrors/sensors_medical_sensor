@@ -18,8 +18,8 @@
 #include <thread>
 
 #include "medical_native_type.h"
-#include "medical_data_channel.h"
-#include "medical_service_client.h"
+#include "medical_sensor_data_channel.h"
+#include "medical_sensor_service_client.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
@@ -29,10 +29,10 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeNativeTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "MedicalNativeTest" };
 }
 
-class AfeNativeTest : public testing::Test {
+class MedicalNativeTest : public testing::Test {
 public:
     static void SetUpTestCase();
     static void TearDownTestCase();
@@ -45,27 +45,28 @@ public:
     std::unique_ptr<MedicalSensorServiceClient> afeServiceClient_;
     bool dataReport_;
 };
-void AfeNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *data)
+void MedicalNativeTest::HandleEvent(struct SensorEvent *events, int32_t num, void *data)
 {
     ASSERT_NE(events, nullptr);
     HiLog::Info(LABEL, "%{public}s start,num : %{public}d", __func__, num);
-    AfeNativeTest *test = reinterpret_cast<AfeNativeTest *>(data);
+    MedicalNativeTest *test = reinterpret_cast<MedicalNativeTest *>(data);
     ASSERT_NE(test, nullptr);
     for (int32_t i = 0; i < num; i++) {
-        HiLog::Info(LABEL, "%{public}s: sensorId : %{public}d, afeid: %{public}d", __func__, events[i].sensorTypeId, test->afeId_);
+        HiLog::Info(LABEL, "%{public}s: sensorId : %{public}d, afeid: %{public}d",
+            __func__, events[i].sensorTypeId, test->afeId_);
         if (events[i].sensorTypeId == (int32_t)test->afeId_) {
             test->dataReport_ = true;
         }
     }
     return;
 }
-void AfeNativeTest::SetUpTestCase()
+void MedicalNativeTest::SetUpTestCase()
 {}
 
-void AfeNativeTest::TearDownTestCase()
+void MedicalNativeTest::TearDownTestCase()
 {}
 
-void AfeNativeTest::SetUp()
+void MedicalNativeTest::SetUp()
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     afeDataChannel_ = new (std::nothrow) MedicalSensorDataChannel();
@@ -82,7 +83,7 @@ void AfeNativeTest::SetUp()
     dataReport_ = false;
 }
 
-void AfeNativeTest::TearDown()
+void MedicalNativeTest::TearDown()
 {
     afeServiceClient_->DestroyDataChannel();
     afeDataChannel_->DestroySensorDataChannel();
@@ -93,7 +94,7 @@ void AfeNativeTest::TearDown()
  * @tc.desc: enable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeNativeTest, SensorOperation_001, TestSize.Level1)
+HWTEST_F(MedicalNativeTest, SensorOperation_001, TestSize.Level1)
 {
     HiLog::Info(LABEL, "SensorOperation_001 begin");
     uint64_t samplingPeriodNs = 10000000;

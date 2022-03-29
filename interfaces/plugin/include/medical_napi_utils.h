@@ -12,15 +12,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef MEDICAL_SENSOR_NAPI_UTILS_H
+#define MEDICAL_SENSOR_NAPI_UTILS_H
+
+#include <uv.h>
+#include <iostream>
 
 #include "napi/native_api.h"
 #include "napi/native_node_api.h"
-#include <uv.h>
-#include "medical_native_impl.h"
-#include <iostream>
 
-#define EVENT_INVALID_PARAMETER (-1);
-#define EVENT_OK 0;
+#include "medical_native_impl.h"
+
+#define EVENT_INVALID_PARAMETER (-1)
+#define EVENT_OK 0
 #define MAX_DATA_LEN 128
 struct AsyncCallbackInfo {
     napi_env env;
@@ -41,3 +45,4 @@ void EmitUvEventLoop(AsyncCallbackInfo *async_callback_info);
 int64_t GetCppInt64(napi_value value, napi_env env);
 napi_value NapiGetNamedProperty(napi_value jsonObject, std::string name, napi_env env);
 napi_value GetUndefined(napi_env env);
+#endif // MEDICAL_SENSOR_NAPI_UTILS_H

@@ -17,7 +17,7 @@
 #define SENSOR_SERVICE_PROXY_H
 
 #include "errors.h"
-#include "i_medical_service.h"
+#include "i_medical_sensor_service.h"
 #include "iremote_proxy.h"
 #include "nocopyable.h"
 #include "medical_native_type.h"

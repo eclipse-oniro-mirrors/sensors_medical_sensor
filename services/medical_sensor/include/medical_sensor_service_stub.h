@@ -20,7 +20,7 @@
 #include "message_parcel.h"
 #include "nocopyable.h"
 
-#include "i_medical_service.h"
+#include "i_medical_sensor_service.h"
 
 namespace OHOS {
 namespace Sensors {

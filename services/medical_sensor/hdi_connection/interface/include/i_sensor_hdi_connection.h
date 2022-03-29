@@ -19,7 +19,7 @@
 #include <condition_variable>
 #include <mutex>
 #include "report_data_cache.h"
-#include "medical.h"
+#include "medical_sensor.h"
 
 namespace OHOS {
 namespace Sensors {

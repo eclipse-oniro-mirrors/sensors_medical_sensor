@@ -23,7 +23,9 @@ namespace Sensors {
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_HARDWARE, "MedicalSensor_HdiServiceImpl" };
+constexpr HiLogLabel LABEL = {
+    LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_HDI_HARDWARE, "MedicalSensor_HdiServiceImpl"
+};
 constexpr int64_t SAMPLING_INTERVAL_NS = 200000000;
 constexpr int32_t CONVERT_MULTIPLES = 1000;
 std::vector<SensorInformation> g_sensorInfos = {

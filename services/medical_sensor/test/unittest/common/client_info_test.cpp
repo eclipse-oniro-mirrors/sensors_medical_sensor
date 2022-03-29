@@ -299,7 +299,7 @@ HWTEST_F(ClientInfoTest, GetSensorChannel_002, TestSize.Level1)
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     auto ret = clientInfo_.GetSensorChannel(INVALID_SENSOR_ID);
     ASSERT_EQ(ret.size(), 0UL);
-    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t{ ret.size() });
+    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t { ret.size() });
 }
 
 /*
@@ -312,7 +312,7 @@ HWTEST_F(ClientInfoTest, GetSensorChannel_003, TestSize.Level1)
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     auto ret = clientInfo_.GetSensorChannel(INVALID_SENSOR_ID);
     ASSERT_EQ(ret.size(), 0UL);
-    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t{ ret.size() });
+    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t { ret.size() });
 }
 
 /*
@@ -353,7 +353,7 @@ HWTEST_F(ClientInfoTest, DestroySensorChannel_001, TestSize.Level1)
     channelList = clientInfo_.GetSensorChannel(ACC_SENSOR_ID);
     ASSERT_EQ(channelList.size(), 1UL);
 
-    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t{ channelList.size() });
+    HiLog::Info(LABEL, "%{public}s end ret.size() : %{public}d", __func__, int32_t { channelList.size() });
 }
 
 /*

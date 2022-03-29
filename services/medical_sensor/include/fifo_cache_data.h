@@ -20,7 +20,7 @@
 
 #include "refbase.h"
 #include "medical_native_type.h"
-#include "medical_basic_data_channel.h"
+#include "medical_sensor_basic_data_channel.h"
 
 #include "nocopyable.h"
 
