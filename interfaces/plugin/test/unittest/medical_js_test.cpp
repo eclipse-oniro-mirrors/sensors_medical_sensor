@@ -191,7 +191,7 @@ HWTEST_F(MedicalJsTest, GetNapiInt32_001, TestSize.Level1)
     napi_value value = GetNapiInt32(number, env);
     napi_valuetype ret;
     napi_typeof(env, value, &ret);
-    ASSERT_EQ(ret, napi_number);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -210,7 +210,7 @@ HWTEST_F(MedicalJsTest, GetNapiInt32_002, TestSize.Level1)
     napi_value value = GetNapiInt32(number, env);
     napi_valuetype ret;
     napi_typeof(env, value, &ret);
-    ASSERT_EQ(ret, napi_number);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -223,13 +223,13 @@ HWTEST_F(MedicalJsTest, GetNapiInt32_003, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)true;
+    int32_t number = static_cast<int32_t>(true);
     
     // call function
     napi_value value = GetNapiInt32(number, env);
     napi_valuetype ret;
     napi_typeof(env, value, &ret);
-    ASSERT_EQ(ret, napi_number);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -242,13 +242,13 @@ HWTEST_F(MedicalJsTest, GetNapiInt32_004, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)false;
+    int32_t number = static_cast<int32_t>(false);
     
     // call function
     napi_value value = GetNapiInt32(number, env);
     napi_valuetype ret;
     napi_typeof(env, value, &ret);
-    ASSERT_EQ(ret, napi_number);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -261,13 +261,13 @@ HWTEST_F(MedicalJsTest, GetNapiInt32_005, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)'a';
+    int32_t number = static_cast<int32_t>('a');
     
     // call function
     napi_value value = GetNapiInt32(number, env);
     napi_valuetype ret;
     napi_typeof(env, value, &ret);
-    ASSERT_EQ(ret, napi_number);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -418,7 +418,7 @@ HWTEST_F(MedicalJsTest, GetCppInt32_001, TestSize.Level1)
 
     // call function
     int32_t ret = GetCppInt32(value, env);
-    ASSERT_EQ(ret, (int32_t)INT32_MAX);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -437,7 +437,7 @@ HWTEST_F(MedicalJsTest, GetCppInt32_002, TestSize.Level1)
 
     // call function
     int32_t ret = GetCppInt32(value, env);
-    ASSERT_EQ(ret, (int32_t)INT32_MIN);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -450,13 +450,13 @@ HWTEST_F(MedicalJsTest, GetCppInt32_003, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)true;
+    int32_t number = static_cast<int32_t>(true);
     napi_value value;
     napi_create_int32(env, number, &value);
 
     // call function
     int32_t ret = GetCppInt32(value, env);
-    ASSERT_EQ(ret, (int32_t)true);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -469,13 +469,13 @@ HWTEST_F(MedicalJsTest, GetCppInt32_004, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)false;
+    int32_t number = static_cast<int32_t>(false);
     napi_value value;
     napi_create_int32(env, number, &value);
 
     // call function
     int32_t ret = GetCppInt32(value, env);
-    ASSERT_EQ(ret, (int32_t)false);
+    ASSERT_EQ(ret, number);
 }
 /*
  * @tc.name: GetCppInt32_005
@@ -487,13 +487,13 @@ HWTEST_F(MedicalJsTest, GetCppInt32_005, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int32_t number = (int32_t)'b';
+    int32_t number = static_cast<int32_t>('b');
     napi_value value;
     napi_create_int32(env, number, &value);
 
     // call function
     int32_t ret = GetCppInt32(value, env);
-    ASSERT_EQ(ret, (int32_t)'b');
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -505,9 +505,9 @@ HWTEST_F(MedicalJsTest, GetCppInt32_005, TestSize.Level1)
 HWTEST_F(MedicalJsTest, GetCppInt64_001, TestSize.Level1)
 {
     // Construction parameters
-    int64_t tmpInt64Max = 9007199254740991;//9223372036854775807;9007199254740992
+    int64_t tmpInt64Max = 9007199254740991;
     napi_env env = (napi_env)engine_;
-    int64_t number = tmpInt64Max;//(int64_t)INT64_MAX;
+    int64_t number = tmpInt64Max;
     napi_value value;
     napi_create_int64(env, number, &value);
 
@@ -526,13 +526,13 @@ HWTEST_F(MedicalJsTest, GetCppInt64_002, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int64_t number = (int64_t)INT64_MIN;
+    int64_t number = static_cast<int32_t>(INT64_MIN);
     napi_value value;
     napi_create_int64(env, number, &value);
 
     // call function
     int64_t ret = GetCppInt64(value, env);
-    ASSERT_EQ(ret, (int64_t)INT64_MIN);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -545,14 +545,14 @@ HWTEST_F(MedicalJsTest, GetCppInt64_003, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int64_t number = (int64_t)true;
+    int64_t number = static_cast<int32_t>(true);
     napi_value value;
     napi_create_int64(env, number, &value);
 
 
     // call function
     int64_t ret = GetCppInt64(value, env);
-    ASSERT_EQ(ret, (int64_t)true);
+    ASSERT_EQ(ret, number);
 }
 
 /*
@@ -565,13 +565,13 @@ HWTEST_F(MedicalJsTest, GetCppInt64_004, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int64_t number = (int64_t)false;
+    int64_t number = static_cast<int32_t>(false);
     napi_value value;
     napi_create_int64(env, number, &value);
 
     // call function
     int64_t ret = GetCppInt64(value, env);
-    ASSERT_EQ(ret, (int64_t)false);
+    ASSERT_EQ(ret, number);
 }
 /*
  * @tc.name: GetCppInt64_005
@@ -583,13 +583,13 @@ HWTEST_F(MedicalJsTest, GetCppInt64_005, TestSize.Level1)
 {
     // Construction parameters
     napi_env env = (napi_env)engine_;
-    int64_t number = (int64_t)'c';
+    int64_t number = static_cast<int32_t>('c');
     napi_value value;
     napi_create_int64(env, number, &value);
 
     // call function
     int64_t ret = GetCppInt64(value, env);
-    ASSERT_EQ(ret, (int64_t)'c');
+    ASSERT_EQ(ret, number);
 }
 }  // namespace Sensors
 }  // namespace OHOS

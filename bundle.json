@@ -51,7 +51,6 @@
         }
       ],
       "test": [
-        "//base/sensors/medical_sensor/frameworks/native/medical_sensor/test:unittest",
         "//base/sensors/medical_sensor/interfaces/native/test:unittest",
         "//base/sensors/medical_sensor/interfaces/plugin/test/unittest:unittest",
         "//base/sensors/medical_sensor/services/medical_sensor/test:unittest"
