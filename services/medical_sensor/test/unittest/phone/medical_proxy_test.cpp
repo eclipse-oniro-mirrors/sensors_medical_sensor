@@ -35,13 +35,13 @@ using namespace testing::ext;
 using namespace OHOS::HiviewDFX;
 
 namespace {
-constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "AfeProxyTest" };
+constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_TEST, "MedicalProxyTest" };
 const uint32_t INVALID_SENSOR_ID = -1;
 const std::string CMD_LINE = "ps -ef | grep 'hardware.afe' | grep -v grep | awk '{print $2}'";
 constexpr int32_t BUFFER_SIZE = 8;
 constexpr pid_t INVALID_PID = -1;
 
-class AfeProxyTest : public testing::Test {
+class MedicalProxyTest : public testing::Test {
 public:
     static void SetUpTestCase();
     static void TearDownTestCase();
@@ -54,18 +54,19 @@ public:
 };
 }  // namespace
 
-void AfeProxyTest::SetUpTestCase()
+void MedicalProxyTest::SetUpTestCase()
 {}
 
-void AfeProxyTest::TearDownTestCase()
+void MedicalProxyTest::TearDownTestCase()
 {}
 
-void AfeProxyTest::SetUp()
+void MedicalProxyTest::SetUp()
 {
     HiLog::Info(LABEL, "%{public}s begin", __func__);
     auto systemAbilityManager = SystemAbilityManagerClient::GetInstance().GetSystemAbilityManager();
     ASSERT_NE(systemAbilityManager, nullptr);
-    afeProxy_ = iface_cast<IMedicalSensorService>(systemAbilityManager->GetSystemAbility(MEDICAL_SENSOR_SERVICE_ABILITY_ID));
+    afeProxy_ =
+        iface_cast<IMedicalSensorService>(systemAbilityManager->GetSystemAbility(MEDICAL_SENSOR_SERVICE_ABILITY_ID));
     ASSERT_NE(afeProxy_, nullptr);
     afes_ = afeProxy_->GetSensorList();
     ASSERT_NE(afes_.size(), 0UL);
@@ -74,10 +75,10 @@ void AfeProxyTest::SetUp()
     HiLog::Info(LABEL, "%{public}s end", __func__);
 }
 
-void AfeProxyTest::TearDown()
+void MedicalProxyTest::TearDown()
 {}
 
-pid_t AfeProxyTest::GetSensorServicePid()
+pid_t MedicalProxyTest::GetSensorServicePid()
 {
     pid_t pid = INVALID_PID;
     char buf[BUFFER_SIZE] = { 0 };
@@ -87,7 +88,9 @@ pid_t AfeProxyTest::GetSensorServicePid()
         return pid;
     }
 
-    fgets(buf, sizeof(buf) - 1, fp);
+    if (fgets(buf, sizeof(buf) - 1, fp) == nullptr) {
+        HiLog::Error(LABEL, "fgets service id failed!");
+    }
     pclose(fp);
     fp = nullptr;
     HiLog::Info(LABEL, "process is : %{public}s", buf);
@@ -110,7 +113,7 @@ pid_t AfeProxyTest::GetSensorServicePid()
  * @tc.desc: enable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, EnableSensor_001, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, EnableSensor_001, TestSize.Level1)
 {
     HiLog::Info(LABEL, "EnableSensor begin");
     ASSERT_NE(afeProxy_, nullptr);
@@ -145,7 +148,7 @@ HWTEST_F(AfeProxyTest, EnableSensor_001, TestSize.Level1)
  * @tc.desc: enable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, EnableSensor_002, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, EnableSensor_002, TestSize.Level1)
 {
     HiLog::Info(LABEL, "EnableSensor begin");
     ASSERT_NE(afeProxy_, nullptr);
@@ -161,7 +164,7 @@ HWTEST_F(AfeProxyTest, EnableSensor_002, TestSize.Level1)
  * @tc.desc: enable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, EnableSensor_003, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, EnableSensor_003, TestSize.Level1)
 {
     HiLog::Info(LABEL, "EnableSensor begin");
     ASSERT_NE(afeProxy_, nullptr);
@@ -177,7 +180,7 @@ HWTEST_F(AfeProxyTest, EnableSensor_003, TestSize.Level1)
  * @tc.desc: run command flush
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, RunCommand_001, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, RunCommand_001, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     uint32_t cmdType = 0;  // flush cmd
@@ -185,7 +188,7 @@ HWTEST_F(AfeProxyTest, RunCommand_001, TestSize.Level1)
 
     auto ret = afeProxy_->RunCommand(afeId_, cmdType, params);
     HiLog::Info(LABEL, "RunCommand_001 ret is : %{public}d", ret);
-    // because the AfeProxyTest haven't calling TransferDataChannel, so RunCommand should return fail.
+    // because the MedicalProxyTest haven't calling TransferDataChannel, so RunCommand should return fail.
     ASSERT_NE(ret, ERR_OK);
 }
 
@@ -194,7 +197,7 @@ HWTEST_F(AfeProxyTest, RunCommand_001, TestSize.Level1)
  * @tc.desc: run command unknown
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, RunCommand_002, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, RunCommand_002, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     uint32_t cmdType = 4;  // unknown cmd
@@ -208,7 +211,7 @@ HWTEST_F(AfeProxyTest, RunCommand_002, TestSize.Level1)
  * @tc.desc: run command unknown
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, RunCommand_003, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, RunCommand_003, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     uint32_t cmdType = 4;  // unknown cmd
@@ -222,7 +225,7 @@ HWTEST_F(AfeProxyTest, RunCommand_003, TestSize.Level1)
  * @tc.desc: run command unknown
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, RunCommand_004, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, RunCommand_004, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     uint32_t cmdType = 0;  // flush cmd
@@ -236,7 +239,7 @@ HWTEST_F(AfeProxyTest, RunCommand_004, TestSize.Level1)
  * @tc.desc: disable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, DisableSensor_001, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, DisableSensor_001, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     auto ret = afeProxy_->DisableSensor(afeId_);
@@ -249,7 +252,7 @@ HWTEST_F(AfeProxyTest, DisableSensor_001, TestSize.Level1)
  * @tc.desc: disable afe
  * @tc.type: FUNC
  */
-HWTEST_F(AfeProxyTest, DisableSensor_002, TestSize.Level1)
+HWTEST_F(MedicalProxyTest, DisableSensor_002, TestSize.Level1)
 {
     ASSERT_NE(afeProxy_, nullptr);
     auto ret = afeProxy_->DisableSensor(INVALID_SENSOR_ID);
