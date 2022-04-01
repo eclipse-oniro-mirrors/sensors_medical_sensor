@@ -37,8 +37,8 @@ sptr<ISensorInterface> sensorInterface_ = nullptr;
 sptr<ISensorCallback> eventCallback_ = nullptr;
 std::map<int32_t, MedicalSensorBasicInfo> sensorBasicInfoMap_;
 std::mutex sensorBasicInfoMutex_;
-constexpr int32_t GET_HDI_SERVICE_COUNT = 10;
-constexpr uint32_t WAIT_MS = 100;
+constexpr int32_t GET_HDI_SERVICE_COUNT = 20;
+constexpr uint32_t WAIT_MS = 1000;
 }
 
 DataCacheFunc HdiConnection::cacheData_ = nullptr;
@@ -178,7 +178,7 @@ int32_t HdiConnection::RegisteDataReport(DataCacheFunc cacheData, sptr<ReportDat
         HiLog::Error(LABEL, "%{public}s failed, reportDataCache or sensorInterface_ cannot be null", __func__);
         return ERR_NO_INIT;
     }
-    int32_t ret = sensorInterface_->Register(129, eventCallback_);
+    int32_t ret = sensorInterface_->Register(1, eventCallback_);
     if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s failed", __func__);
         return ret;
@@ -195,7 +195,7 @@ int32_t HdiConnection::DestroyHdiConnection()
         HiLog::Error(LABEL, "%{public}s connect v1_0 hdi failed", __func__);
         return ERR_NO_INIT;
     }
-    int32_t ret = sensorInterface_->Unregister(129, eventCallback_);
+    int32_t ret = sensorInterface_->Unregister(1, eventCallback_);
     if (ret < 0) {
         HiLog::Error(LABEL, "%{public}s failed", __func__);
         return ret;
