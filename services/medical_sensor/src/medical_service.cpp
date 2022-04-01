@@ -384,11 +384,13 @@ ErrCode MedicalSensorService::TransferDataChannel(const sptr<MedicalSensorBasicD
     const sptr<IRemoteObject> &afeClient)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
-    g_sendFd = sensorBasicDataChannel->GetSendDataFd();
+
     if ((sensorBasicDataChannel == nullptr)) {
         HiLog::Error(LABEL, "%{public}s sensorBasicDataChannel cannot be null", __func__);
         return ERR_NO_INIT;
     }
+
+    g_sendFd = sensorBasicDataChannel->GetSendDataFd();
     auto pid = this->GetCallingPid();
     auto uid = this->GetCallingUid();
     if (!clientInfo_.UpdateUid(pid, uid)) {
