@@ -12,21 +12,18 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-import("//foundation/appexecfwk/standard/appexecfwk.gni")
-import(
-    "//foundation/appexecfwk/standard/libs/libeventhandler/lib_event_handler_sources.gni")
 
 SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
 
 ##############################################
 ohos_shared_library("libmedical_native") {
   sources = [
-    "src/my_event_handler.cpp",
-    "src/my_file_descriptor_listener.cpp",
+    "src/medical_client_stub.cpp",
     "src/medical_data_channel.cpp",
     "src/medical_service_client.cpp",
     "src/medical_service_proxy.cpp",
-    "src/medical_client_stub.cpp",
+    "src/my_event_handler.cpp",
+    "src/my_file_descriptor_listener.cpp",
   ]
 
   include_dirs = [
@@ -36,8 +33,6 @@ ohos_shared_library("libmedical_native") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
-    "//foundation/appexecfwk/standard/libs/test/moduletest/common/event_handler",
     "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
   ]
   deps = [
@@ -46,12 +41,12 @@ ohos_shared_library("libmedical_native") {
   ]
 
   external_deps = [
+    "eventhandler:libeventhandler",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
     "utils_base:utils",
-    "eventhandler:libeventhandler",
   ]
 
   part_name = "medical_sensor"

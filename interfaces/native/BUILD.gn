@@ -34,7 +34,6 @@ ohos_shared_library("medical_interface_native") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
     "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
-    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
     "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
   ]
   deps = [
@@ -43,10 +42,10 @@ ohos_shared_library("medical_interface_native") {
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
   ]
   external_deps = [
+    "eventhandler:libeventhandler",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "utils_base:utils",
-    "eventhandler:libeventhandler",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"
