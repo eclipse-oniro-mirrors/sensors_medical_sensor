@@ -47,9 +47,7 @@ ohos_shared_library("libmedical_service") {
 
   cflags = [ "-Wno-error=inconsistent-missing-override" ]
 
-  deps = [
-    "$SUBSYSTEM_DIR/utils:libmedical_utils",
-  ]
+  deps = [ "$SUBSYSTEM_DIR/utils:libmedical_utils" ]
 
   external_deps = [
     "hisysevent_native:libhisysevent",
@@ -58,8 +56,8 @@ ohos_shared_library("libmedical_service") {
     "permission_standard:libpermissionsdk_standard",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
-    "utils_base:utils",
     "sensor_device_driver:libsensor_proxy_1.0",
+    "utils_base:utils",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

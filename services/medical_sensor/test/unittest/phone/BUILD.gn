@@ -29,7 +29,6 @@ ohos_unittest("MedicalProxyTest") {
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
   ]
 
   deps = [
