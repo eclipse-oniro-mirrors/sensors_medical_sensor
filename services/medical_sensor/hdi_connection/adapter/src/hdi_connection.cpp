@@ -268,7 +268,7 @@ void HdiConnection::RegisterHdiDeathRecipient()
         HiLog::Error(LABEL, "%{public}s hdiDeathObserver_ cannot be null", __func__);
         return;
     }
-    sensorInterface_->AsObject()->AddDeathRecipient(hdiDeathObserver_);
+    OHOS::HDI::hdi_objcast<ISensorInterface>(sensorInterface_)->AddDeathRecipient(hdiDeathObserver_);
 }
 
 void HdiConnection::UnregisterHdiDeathRecipient()
@@ -278,7 +278,7 @@ void HdiConnection::UnregisterHdiDeathRecipient()
         HiLog::Error(LABEL, "%{public}s sensorInterface_ or hdiDeathObserver_ is null", __func__);
         return;
     }
-    sensorInterface_->AsObject()->RemoveDeathRecipient(hdiDeathObserver_);
+    OHOS::HDI::hdi_objcast<ISensorInterface>(sensorInterface_)->RemoveDeathRecipient(hdiDeathObserver_);
 }
 
 void HdiConnection::ProcessDeathObserver(const wptr<IRemoteObject> &object)
