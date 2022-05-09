@@ -9,7 +9,7 @@
   "component": {
     "name": "medical_sensor",
     "subsystem": "sensors",
-    "syscap": ["SystemCapability.Sensors.Medical_sensor"],
+    "syscap": ["SystemCapability.Sensors.Medical.Sensor"],
     "features": [],
     "adapted_system_type": [ "standard" ],
     "rom": "2048KB",
