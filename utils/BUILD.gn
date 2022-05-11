@@ -16,12 +16,12 @@ SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
 ohos_shared_library("libmedical_utils") {
   sources = [
     "src/dmd_report.cpp",
-    "src/permission_util.cpp",
-    "src/report_data_cache.cpp",
     "src/medical.cpp",
     "src/medical_basic_data_channel.cpp",
     "src/medical_basic_info.cpp",
     "src/medical_channel_info.cpp",
+    "src/permission_util.cpp",
+    "src/report_data_cache.cpp",
   ]
 
   include_dirs = [
