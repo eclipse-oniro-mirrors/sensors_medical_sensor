@@ -50,12 +50,12 @@ ohos_shared_library("libmedical_service") {
   deps = [ "$SUBSYSTEM_DIR/utils:libmedical_utils" ]
 
   external_deps = [
+    "drivers_interface_sensor:libsensor_proxy_1.0",
     "hisysevent_native:libhisysevent",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
-    "sensor_device_driver_interface:libsensor_proxy_1.0",
     "utils_base:utils",
   ]
   part_name = "medical_sensor"

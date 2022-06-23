@@ -24,7 +24,7 @@
         "appexecfwk_standard",
         "napi",
         "hisysevent_native",
-        "sensor_device_driver"
+        "drivers_peripheral_sensor"
       ],
       "third_party": []
     },
