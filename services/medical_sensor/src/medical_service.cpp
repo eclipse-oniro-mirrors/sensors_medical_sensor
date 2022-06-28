@@ -172,13 +172,13 @@ void MedicalSensorService::ReportSensorUsedInfo(uint32_t sensorId, bool enable)
         // define in LogPower.java, 500 stand for enable sensor
         message.append("uid : ").append(std::to_string(uid)).append(" pkgName : ").append(packageName)
             .append(" type : ");
-        HiSysEvent::Write(HiSysEvent::Domain::SENSORS, "EnableAfe", HiSysEvent::EventType::BEHAVIOR,
+        HiSysEvent::Write(HiSysEvent::Domain::MEDICAL_SENSOR, "EnableAfe", HiSysEvent::EventType::BEHAVIOR,
             "LEVEL", logLevel, "TAG", "DUBAI_TAG_HHEALTH_ENABLE", "MESSAGE", message);
     } else {
         // define in LogPower.java, 501 stand for disable sensor
         message.append("uid : ").append(std::to_string(uid)).append(" pkgName : ").append(packageName)
             .append(" type : ");
-        HiSysEvent::Write(HiSysEvent::Domain::SENSORS, "DisableAfe", HiSysEvent::EventType::BEHAVIOR,
+        HiSysEvent::Write(HiSysEvent::Domain::MEDICAL_SENSOR, "DisableAfe", HiSysEvent::EventType::BEHAVIOR,
             "LEVEL", logLevel, "TAG", "DUBAI_TAG_HHEALTH_DISABLE", "MESSAGE", message);
     }
 

@@ -84,7 +84,7 @@ void DmdReport::ReportException(int32_t eventId, const std::string &interfaceNam
     }
     int64_t curTime = GetSecondsSince1970ToNow();
     if ((curTime - eventIt->second) > SECONDS_HALF_HOUR) {
-        HiviewDFX::HiSysEvent::Write(HiviewDFX::HiSysEvent::Domain::SENSORS, GetEventName(eventId),
+        HiviewDFX::HiSysEvent::Write(HiviewDFX::HiSysEvent::Domain::MEDICAL_SENSOR, GetEventName(eventId),
             HiviewDFX::HiSysEvent::EventType::FAULT, interfaceName, error);
         HiLog::Error(LABEL, "%{public}s eventId : %{public}d, interfaceName=%{public}s, error=%{public}d",
             __func__, eventId, interfaceName.c_str(), error);
