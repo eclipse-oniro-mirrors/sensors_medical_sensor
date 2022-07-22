@@ -33,7 +33,7 @@ ohos_shared_library("libmedical_native") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include",
   ]
   deps = [
     "$SUBSYSTEM_DIR/services/medical_sensor:libmedical_service",
@@ -45,7 +45,7 @@ ohos_shared_library("libmedical_native") {
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
-    "samgr_standard:samgr_proxy",
+    "samgr:samgr_proxy",
     "utils_base:utils",
   ]
 
