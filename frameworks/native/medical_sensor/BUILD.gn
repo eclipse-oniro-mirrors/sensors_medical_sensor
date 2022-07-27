@@ -28,7 +28,7 @@ ohos_shared_library("libmedical_native") {
 
   include_dirs = [
     "include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//utils/system/safwk/native/include",
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
@@ -41,12 +41,12 @@ ohos_shared_library("libmedical_native") {
   ]
 
   external_deps = [
+    "c_utils:utils",
     "eventhandler:libeventhandler",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr_standard:samgr_proxy",
-    "utils_base:utils",
   ]
 
   part_name = "medical_sensor"
