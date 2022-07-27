@@ -19,7 +19,7 @@ ohos_shared_library("medical") {
     "//native_engine",
     "../native/include",
     "//third_party/libuv/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "./include",
   ]
   defines = [
@@ -32,9 +32,9 @@ ohos_shared_library("medical") {
   ]
   deps = [ "../native:medical_interface_native" ]
   external_deps = [
+    "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
     "napi:ace_napi",
-    "utils_base:utils",
   ]
   relative_install_dir = "module"
   part_name = "medical_sensor"

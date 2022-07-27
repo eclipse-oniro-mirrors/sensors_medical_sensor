@@ -26,7 +26,7 @@ ohos_shared_library("libmedical_utils") {
 
   include_dirs = [
     "include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//utils/system/safwk/native/include",
     "//drivers/peripheral/sensor/interfaces/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
@@ -34,12 +34,12 @@ ohos_shared_library("libmedical_utils") {
   ]
 
   external_deps = [
+    "c_utils:utils",
     "hisysevent_native:libhisysevent",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr:samgr_proxy",
-    "utils_base:utils",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"

@@ -24,7 +24,7 @@ ohos_unittest("MedicalJsTest") {
     "//native_engine",
     "$SUBSYSTEM_DIR/interfaces/native/include",
     "$SUBSYSTEM_DIR/interfaces/plugin/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "./include",
     "//third_party/libuv/include",
     "//foundation/arkui/napi",
@@ -46,9 +46,11 @@ ohos_unittest("MedicalJsTest") {
     "//third_party/googletest:gtest_main",
     "//third_party/libuv:uv_static",
     "//third_party/quickjs:qjs",
-    "//utils/native/base:utils",
   ]
-  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
   relative_install_dir = "module"
   part_name = "medical_sensor"
   subsystem_name = "sensors"
