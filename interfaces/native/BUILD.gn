@@ -34,7 +34,7 @@ ohos_shared_library("medical_interface_native") {
     "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
     "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
-    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include",
   ]
   deps = [
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor:libmedical_native",

@@ -39,7 +39,7 @@ ohos_shared_library("libmedical_utils") {
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
-    "samgr_standard:samgr_proxy",
+    "samgr:samgr_proxy",
   ]
   part_name = "medical_sensor"
   subsystem_name = "sensors"
