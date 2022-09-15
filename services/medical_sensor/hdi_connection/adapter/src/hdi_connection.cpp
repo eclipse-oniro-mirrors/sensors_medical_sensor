@@ -18,8 +18,9 @@
 #include <mutex>
 #include <thread>
 
+#include "iproxy_broker.h"
 #include "sensor_event_callback.h"
-#include "v1_0/sensor_interface_proxy.h"
+#include "v1_0/isensor_interface.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
 
