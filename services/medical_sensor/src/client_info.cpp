@@ -17,6 +17,7 @@
 
 #include <mutex>
 
+#include "permission_util.h"
 #include "securec.h"
 #include "sensor_hdi_connection.h"
 #include "medical_errors.h"
@@ -120,7 +121,7 @@ bool ClientInfo::OnlyCurPidSensorEnabled(uint32_t sensorId, int32_t pid)
     return ret;
 }
 
-bool ClientInfo::UpdateUid(int32_t pid, int32_t uid)
+bool ClientInfo::UpdateUid(int32_t pid, int32_t uid, AccessTokenID callerToken)
 {
     HiLog::Debug(LABEL, "%{public}s begin, pid : %{public}d, uid : %{public}d", __func__, pid, uid);
     if ((uid == INVALID_UID) || (pid <= INVALID_PID)) {
@@ -128,17 +129,18 @@ bool ClientInfo::UpdateUid(int32_t pid, int32_t uid)
         return false;
     }
     std::lock_guard<std::mutex> uidLock(uidMutex_);
-    auto uidIt = uidMap_.find(pid);
-    if (uidIt == uidMap_.end()) {
-        if (uidMap_.size() == MAX_SUPPORT_CHANNEL) {
+    AppThreadInfo appThreadInfo(pid, uid, callerToken);
+    auto uidIt = appThreadInfoMap_.find(pid);
+    if (uidIt == appThreadInfoMap_.end()) {
+        if (appThreadInfoMap_.size() == MAX_SUPPORT_CHANNEL) {
             HiLog::Error(LABEL, "%{public}s max support channel size is %{public}u", __func__, MAX_SUPPORT_CHANNEL);
             return false;
         }
-        auto ret = uidMap_.insert(std::make_pair(pid, uid));
+        auto ret = appThreadInfoMap_.insert(std::make_pair(pid, appThreadInfo));
         HiLog::Debug(LABEL, "%{public}s insert uid ret.second : %{public}d", __func__, ret.second);
         return ret.second;
     }
-    uidMap_[pid] = uid;
+    appThreadInfoMap_[pid] = appThreadInfo;
     HiLog::Debug(LABEL, "%{public}s end", __func__);
     return true;
 }
@@ -151,23 +153,14 @@ bool ClientInfo::DestroyUid(int32_t pid)
         return false;
     }
     std::lock_guard<std::mutex> uidLock(uidMutex_);
-    auto uidIt = uidMap_.find(pid);
-    if (uidIt == uidMap_.end()) {
+    auto uidIt = appThreadInfoMap_.find(pid);
+    if (uidIt == appThreadInfoMap_.end()) {
         HiLog::Debug(LABEL, "%{public}s uid not exist, no need to destroy it", __func__);
         return true;
     }
-    int32_t uid = uidIt->second;
-    uidMap_.erase(uidIt);
-    for (const auto &it : uidMap_) {
-        if (it.second == uid) {
-            return true;
-        }
-    }
-    MedicalThreadInfo appThreadInfo;
-    appThreadInfo.uid = uid;
-    appThreadInfo.pid = 0;
-    PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    permissionUtil.UnregistPermissionChanged(appThreadInfo);
+
+    appThreadInfoMap_.erase(uidIt);
+
     HiLog::Debug(LABEL, "%{public}s end", __func__);
     return true;
 }
@@ -181,8 +174,8 @@ std::vector<sptr<MedicalSensorBasicDataChannel>> ClientInfo::GetSensorChannelByU
     }
     std::vector<sptr<MedicalSensorBasicDataChannel>> afeChannel;
     std::lock_guard<std::mutex> uidLock(uidMutex_);
-    for (const auto &uidIt : uidMap_) {
-        if (uid != uidIt.second) {
+    for (const auto &uidIt : appThreadInfoMap_) {
+        if (uid != uidIt.second.uid) {
             continue;
         }
         std::lock_guard<std::mutex> channelLock(channelMutex_);
@@ -577,10 +570,10 @@ std::vector<uint32_t> ClientInfo::GetSensorIdByPid(int32_t pid)
     return sensorIdVec;
 }
 
-MedicalThreadInfo ClientInfo::GetAppInfoByChannel(const sptr<MedicalSensorBasicDataChannel> &channel)
+AppThreadInfo ClientInfo::GetAppInfoByChannel(const sptr<MedicalSensorBasicDataChannel> &channel)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
-    MedicalThreadInfo appThreadInfo;
+    AppThreadInfo appThreadInfo;
     {
         std::lock_guard<std::mutex> channelLock(channelMutex_);
         for (auto channelIt = channelMap_.begin(); channelIt != channelMap_.end(); channelIt++) {
@@ -591,9 +584,10 @@ MedicalThreadInfo ClientInfo::GetAppInfoByChannel(const sptr<MedicalSensorBasicD
     }
     {
         std::lock_guard<std::mutex> uidLock(uidMutex_);
-        auto it = uidMap_.find(appThreadInfo.pid);
-        if (it != uidMap_.end()) {
-            appThreadInfo.uid = it->second;
+        auto it = appThreadInfoMap_.find(appThreadInfo.pid);
+        if (it != appThreadInfoMap_.end()) {
+            appThreadInfo.uid = it->second.uid;
+            appThreadInfo.callerToken = it->second.callerToken;
         }
     }
     return appThreadInfo;
@@ -628,11 +622,11 @@ void ClientInfo::GetSensorChannelInfo(std::vector<MedicalSensorChannelInfo> &cha
 int32_t ClientInfo::GetUidByPid(int32_t pid)
 {
     std::lock_guard<std::mutex> uidLock(uidMutex_);
-    auto uidIt = uidMap_.find(pid);
-    if (uidIt == uidMap_.end()) {
+    auto uidIt = appThreadInfoMap_.find(pid);
+    if (uidIt == appThreadInfoMap_.end()) {
         return INVALID_UID;
     }
-    return uidIt->second;
+    return uidIt->second.uid;
 }
 
 void ClientInfo::UpdateCmd(uint32_t sensorId, int32_t uid, int32_t cmdType)
