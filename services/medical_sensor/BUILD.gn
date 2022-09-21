@@ -50,6 +50,7 @@ ohos_shared_library("libmedical_service") {
   deps = [ "$SUBSYSTEM_DIR/utils:libmedical_utils" ]
 
   external_deps = [
+    "access_token:libaccesstoken_sdk",
     "c_utils:utils",
     "drivers_interface_sensor:libsensor_proxy_1.0",
     "hisysevent_native:libhisysevent",

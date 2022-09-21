@@ -393,7 +393,8 @@ ErrCode MedicalSensorService::TransferDataChannel(const sptr<MedicalSensorBasicD
     g_sendFd = sensorBasicDataChannel->GetSendDataFd();
     auto pid = this->GetCallingPid();
     auto uid = this->GetCallingUid();
-    if (!clientInfo_.UpdateUid(pid, uid)) {
+    auto callerToken = GetCallingTokenID();
+    if (!clientInfo_.UpdateUid(pid, uid, callerToken)) {
         HiLog::Error(LABEL, "%{public}s UpdateUid failed", __func__);
         return UPDATE_UID_ERR;
     }

@@ -16,39 +16,23 @@
 #ifndef PERMISSION_UTIL_H
 #define PERMISSION_UTIL_H
 
-#include <mutex>
-#include <set>
 #include <string>
 #include <unordered_map>
 
-#include "refbase.h"
+#include "access_token.h"
 #include "singleton.h"
 
 namespace OHOS {
 namespace Sensors {
-struct MedicalThreadInfo {
-    int32_t pid;
-    int32_t uid;
-    MedicalThreadInfo() : pid(0), uid(0) {};
-    MedicalThreadInfo(int32_t pid, int32_t uid) : pid(pid), uid(uid) {};
-};
-
+using namespace Security::AccessToken;
 class PermissionUtil : public Singleton<PermissionUtil> {
 public:
     PermissionUtil() = default;
-    virtual ~PermissionUtil();
-    /* check local caller's permission by permission name */
-    bool CheckCallingPermission(const std::string &permissionName);
-    bool CheckCallingPermission(const int32_t afeId);
-    bool RegistPermissionChanged(const MedicalThreadInfo &appThreadInfo);
-    void UnregistPermissionChanged(const MedicalThreadInfo &appThreadInfo);
-    void UpdatePermissionStatus(int32_t uid, const std::string &permissionName, bool permissionStatus);
+    virtual ~PermissionUtil() {};
+    int32_t CheckSensorPermission(AccessTokenID callerToken, int32_t sensorTypeId);
 
 private:
-    bool IsPermissionRegisted(int32_t uid);
-    std::mutex permissionStatusMutex_;
-    std::unordered_map<int, std::unordered_map<std::string, bool>> appPermissionStatus_;
-
+    void AddPermissionRecord(AccessTokenID tokenID, const std::string& permissionName, bool status);
     static std::unordered_map<uint32_t, std::string> sensorPermissions_;
 };
 }  // namespace Sensors

@@ -79,8 +79,10 @@ ErrCode MedicalSensorServiceStub::AfeEnableInner(MessageParcel &data, MessagePar
     (void)reply;
     uint32_t sensorId = data.ReadUint32();
     PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    if (!permissionUtil.CheckCallingPermission(sensorId)) {
-        HiLog::Error(LABEL, "%{public}s permission denied", __func__);
+    int32_t ret = permissionUtil.CheckSensorPermission(GetCallingTokenID(), sensorId);
+    if (ret != PERMISSION_GRANTED) {
+        HiLog::Error(LABEL, "%{public}s: sensorId:%{public}u permission failed, result:%{public}d",
+            __func__, sensorId, ret);
         return ERR_PERMISSION_DENIED;
     }
     return EnableSensor(sensorId, data.ReadInt64(), data.ReadInt64());
@@ -91,8 +93,10 @@ ErrCode MedicalSensorServiceStub::AfeDisableInner(MessageParcel &data, MessagePa
     (void)reply;
     uint32_t sensorId = data.ReadUint32();
     PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    if (!permissionUtil.CheckCallingPermission(sensorId)) {
-        HiLog::Error(LABEL, "%{public}s permission denied", __func__);
+    int32_t ret = permissionUtil.CheckSensorPermission(GetCallingTokenID(), sensorId);
+    if (ret != PERMISSION_GRANTED) {
+        HiLog::Error(LABEL, "%{public}s: sensorId:%{public}u permission failed, result:%{public}d",
+            __func__, sensorId, ret);
         return ERR_PERMISSION_DENIED;
     }
     return DisableSensor(sensorId);
@@ -104,8 +108,10 @@ ErrCode MedicalSensorServiceStub::AfeSetOptionInner(MessageParcel &data, Message
     uint32_t sensorId = data.ReadUint32();
     uint32_t opt = data.ReadUint32();
     PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    if (!permissionUtil.CheckCallingPermission(sensorId)) {
-        HiLog::Error(LABEL, "%{public}s permission denied", __func__);
+    int32_t ret = permissionUtil.CheckSensorPermission(GetCallingTokenID(), sensorId);
+    if (ret != PERMISSION_GRANTED) {
+        HiLog::Error(LABEL, "%{public}s: sensorId:%{public}u permission failed, result:%{public}d",
+            __func__, sensorId, ret);
         return ERR_PERMISSION_DENIED;
     }
     return SetOption(sensorId, opt);
@@ -116,8 +122,10 @@ ErrCode MedicalSensorServiceStub::GetAfeStateInner(MessageParcel &data, MessageP
     (void)reply;
     uint32_t sensorId = data.ReadUint32();
     PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    if (!permissionUtil.CheckCallingPermission(sensorId)) {
-        HiLog::Error(LABEL, "%{public}s permission denied", __func__);
+    int32_t ret = permissionUtil.CheckSensorPermission(GetCallingTokenID(), sensorId);
+    if (ret != PERMISSION_GRANTED) {
+        HiLog::Error(LABEL, "%{public}s: sensorId:%{public}u permission failed, result:%{public}d",
+            __func__, sensorId, ret);
         return ERR_PERMISSION_DENIED;
     }
     return GetSensorState(sensorId);
@@ -128,8 +136,10 @@ ErrCode MedicalSensorServiceStub::RunCommandInner(MessageParcel &data, MessagePa
     (void)reply;
     uint32_t sensorId = data.ReadUint32();
     PermissionUtil &permissionUtil = PermissionUtil::GetInstance();
-    if (!permissionUtil.CheckCallingPermission(sensorId)) {
-        HiLog::Error(LABEL, "%{public}s permission denied", __func__);
+    int32_t ret = permissionUtil.CheckSensorPermission(GetCallingTokenID(), sensorId);
+    if (ret != PERMISSION_GRANTED) {
+        HiLog::Error(LABEL, "%{public}s: sensorId:%{public}u permission failed, result:%{public}d",
+            __func__, sensorId, ret);
         return ERR_PERMISSION_DENIED;
     }
     return RunCommand(sensorId, data.ReadUint32(), data.ReadUint32());
