@@ -24,7 +24,7 @@
 #include "refbase.h"
 #include "singleton.h"
 
-#include "permission_util.h"
+#include "app_thread_info.h"
 #include "iremote_object.h"
 #include "nocopyable.h"
 #include "medical_sensor_basic_data_channel.h"
@@ -48,7 +48,7 @@ public:
     bool UpdateSensorInfo(uint32_t sensorId, int32_t pid, const MedicalSensorBasicInfo &sensorInfo);
     void RemoveSubscriber(uint32_t sensorId, uint32_t pid);
     bool UpdateSensorChannel(int32_t pid, const sptr<MedicalSensorBasicDataChannel> &channel);
-    bool UpdateUid(int32_t pid, int32_t uid);
+    bool UpdateUid(int32_t pid, int32_t uid, AccessTokenID callerToken);
     bool ClearSensorInfo(uint32_t sensorId);
     void ClearCurPidSensorInfo(uint32_t sensorId, int32_t pid);
     bool DestroySensorChannel(int32_t pid);
@@ -59,7 +59,7 @@ public:
     int32_t GetStoreEvent(int32_t sensorId, struct SensorEvent &event);
     void StoreEvent(const struct SensorEvent &event);
     void ClearEvent();
-    MedicalThreadInfo GetAppInfoByChannel(const sptr<MedicalSensorBasicDataChannel> &channel);
+    AppThreadInfo GetAppInfoByChannel(const sptr<MedicalSensorBasicDataChannel> &channel);
     bool SaveClientPid(const sptr<IRemoteObject> &sensorClient, int32_t pid);
     int32_t FindClientPid(const sptr<IRemoteObject> &sensorClient);
     void DestroyClientPid(const sptr<IRemoteObject> &sensorClient);
@@ -85,7 +85,7 @@ private:
     std::unordered_map<uint32_t, std::unordered_map<int32_t, MedicalSensorBasicInfo>> clientMap_;
     std::unordered_map<int32_t, sptr<MedicalSensorBasicDataChannel>> channelMap_;
     std::unordered_map<int32_t, struct SensorEvent> storedEvent_;
-    std::unordered_map<int32_t, int32_t> uidMap_;
+    std::unordered_map<int32_t, AppThreadInfo> appThreadInfoMap_;
     std::map<sptr<IRemoteObject>, int32_t> clientPidMap_;
     std::unordered_map<uint32_t, std::unordered_map<int32_t, std::vector<int32_t>>> cmdMap_;
     std::unordered_map<uint32_t, std::queue<struct SensorEvent>> dataQueue_;
