@@ -18,6 +18,7 @@ SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
 module_output_path = "sensors/medical_sensor/interfaces"
 ohos_unittest("MedicalJsTest") {
   module_out_path = module_output_path
+  configs = [ "//arkcompiler/ets_runtime:ark_jsruntime_public_config" ]
 
   include_dirs = [
     "//third_party/node/src",
@@ -30,7 +31,8 @@ ohos_unittest("MedicalJsTest") {
     "//foundation/arkui/napi",
     "//foundation/arkui/napi/interfaces/kits",
     "//foundation/arkui/napi/native_engine",
-    "//foundation/arkui/napi/native_engine/impl/quickjs",
+    "//foundation/arkui/napi/native_engine/impl/ark",
+    "//arkcompiler/ets_runtime",
   ]
   defines = [
     "APP_LOG_TAG = \"medicalJs\"",
@@ -40,12 +42,12 @@ ohos_unittest("MedicalJsTest") {
   deps = [
     "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native",
     "$SUBSYSTEM_DIR/interfaces/plugin:medical",
+    "//arkcompiler/ets_runtime:libark_jsruntime",
     "//foundation/arkui/napi:ace_napi",
-    "//foundation/arkui/napi/:ace_napi_quickjs",
+    "//foundation/arkui/napi/:ace_napi_ark",
     "//third_party/googletest:gtest",
     "//third_party/googletest:gtest_main",
     "//third_party/libuv:uv",
-    "//third_party/quickjs:qjs",
   ]
   external_deps = [
     "c_utils:utils",
