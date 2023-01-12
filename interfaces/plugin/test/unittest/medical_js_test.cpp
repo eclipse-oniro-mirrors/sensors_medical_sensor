@@ -20,7 +20,7 @@
 #include "medical_napi_utils.h"
 #include "medical_native_impl.h"
 #include "native_engine.h"
-#include "quickjs_native_engine.h"
+#include "ark_native_engine.h"
 #include "hilog/log.h"
 
 namespace OHOS {
@@ -55,18 +55,20 @@ void MedicalJsTest::TearDown()
 
 MedicalJsTest::MedicalJsTest()
 {
-    JSRuntime* rt = JS_NewRuntime();
-    if (rt == nullptr) {
-        return ;
+    panda::RuntimeOption option;
+    option.SetGcType(panda::RuntimeOption::GC_TYPE::GEN_GC);
+
+    const int64_t poolSize = 0x1000000;  // 16M
+    option.SetGcPoolSize(poolSize);
+
+    option.SetLogLevel(panda::RuntimeOption::LOG_LEVEL::ERROR);
+    option.SetDebuggerLibraryPath("");
+    EcmaVM *vm = panda::JSNApi::CreateJSVM(option);
+    if (vm == nullptr) {
+        return;
     }
 
-    JSContext* ctx = JS_NewContext(rt);
-    if (ctx == nullptr) {
-        return ;
-    }
-
-    js_std_add_helpers(ctx, 0, nullptr);
-    g_nativeEngine = new QuickJSNativeEngine(rt, ctx, 0); // default instance id 0
+    g_nativeEngine = new ArkNativeEngine(vm, nullptr);
     engine_ = g_nativeEngine;
 }
 
