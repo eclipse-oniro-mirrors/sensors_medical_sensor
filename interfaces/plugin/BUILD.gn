@@ -41,6 +41,31 @@ ohos_shared_library("medical") {
   subsystem_name = "sensors"
 }
 
+ohos_static_library("medical_static") {
+  include_dirs = [
+    "//third_party/node/src",
+    "../native/include",
+    "//third_party/libuv/include",
+    "./include",
+  ]
+  defines = [
+    "APP_LOG_TAG = \"medicalJs\"",
+    "LOG_DOMAIN = 0xD002701",
+  ]
+  sources = [
+    "./src/medical_js.cpp",
+    "./src/medical_napi_utils.cpp",
+  ]
+  deps = [ "../native:medical_interface_native" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+    "napi:ace_napi",
+  ]
+  part_name = "medical_sensor"
+  subsystem_name = "sensors"
+}
+
 group("medical_js_target") {
   deps = [ ":medical" ]
 }

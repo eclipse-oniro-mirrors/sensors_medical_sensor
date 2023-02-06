@@ -41,7 +41,7 @@ ohos_unittest("MedicalJsTest") {
   sources = [ "medical_js_test.cpp" ]
   deps = [
     "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native",
-    "$SUBSYSTEM_DIR/interfaces/plugin:medical",
+    "$SUBSYSTEM_DIR/interfaces/plugin:medical_static",
     "//arkcompiler/ets_runtime:libark_jsruntime",
     "//foundation/arkui/napi:ace_napi",
     "//foundation/arkui/napi/:ace_napi_ark",
