@@ -77,8 +77,6 @@ bool FlushInfoRecord::IsFlushChannelValid(const std::vector<sptr<MedicalSensorBa
     HiLog::Debug(LABEL, "%{public}s channel list size : %{public}u", __func__,
         static_cast<uint32_t>(currChannelList.size()));
     for (const auto &channel : currChannelList) {
-        HiLog::Debug(LABEL, "%{public}s channel : %{public}p, flushchannel : %{public}p", __func__, channel.GetRefPtr(),
-                     flushChannel.GetRefPtr());
         if (channel == flushChannel) {
             return true;
         }
