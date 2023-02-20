@@ -36,7 +36,6 @@ constexpr HiLogLabel LABEL = { LOG_CORE, MedicalSensorLogDomain::MEDICAL_SENSOR_
 
 MedicalSensorServiceStub::MedicalSensorServiceStub()
 {
-    HiLog::Info(LABEL, "%{public}s begin,  %{public}p", __func__, this);
     baseFuncs_[ENABLE_SENSOR] = &MedicalSensorServiceStub::AfeEnableInner;
     baseFuncs_[DISABLE_SENSOR] = &MedicalSensorServiceStub::AfeDisableInner;
     baseFuncs_[GET_SENSOR_STATE] = &MedicalSensorServiceStub::GetAfeStateInner;
@@ -49,7 +48,6 @@ MedicalSensorServiceStub::MedicalSensorServiceStub()
 
 MedicalSensorServiceStub::~MedicalSensorServiceStub()
 {
-    HiLog::Info(LABEL, "%{public}s begin, yigou %{public}p", __func__, this);
     baseFuncs_.clear();
 }
 
