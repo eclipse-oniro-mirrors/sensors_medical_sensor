@@ -12,7 +12,8 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
+import("./../medical_sensor.gni")
+
 ohos_shared_library("libmedical_utils") {
   sources = [
     "src/dmd_report.cpp",
@@ -25,12 +26,8 @@ ohos_shared_library("libmedical_utils") {
   ]
 
   include_dirs = [
-    "include",
-    "//commonlibrary/c_utils/base/include",
-    "//utils/system/safwk/native/include",
-    "//drivers/peripheral/sensor/interfaces/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include/message_parcel.h",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
 
   external_deps = [
@@ -43,6 +40,7 @@ ohos_shared_library("libmedical_utils") {
     "safwk:system_ability_fwk",
     "samgr:samgr_proxy",
   ]
+
   part_name = "medical_sensor"
   subsystem_name = "sensors"
 }

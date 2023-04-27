@@ -12,8 +12,8 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
+import("./../../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
 ohos_shared_library("libmedical_service") {
   sources = [
     "hdi_connection/adapter/src/compatible_connection.cpp",
@@ -32,17 +32,13 @@ ohos_shared_library("libmedical_service") {
   ]
 
   include_dirs = [
-    "include",
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//commonlibrary/c_utils/base/include",
-    "//utils/system/safwk/native/include",
-    "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/services/medical_sensor/include",
-    "//drivers/peripheral/sensor/interfaces/include",
-    "hdi_connection/interface/include",
-    "hdi_connection/adapter/include",
-    "hdi_connection/hardware/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/hdi_connection/interface/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/hdi_connection/adapter/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/hdi_connection/hardware/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
 
   cflags = [ "-Wno-error=inconsistent-missing-override" ]
@@ -53,12 +49,14 @@ ohos_shared_library("libmedical_service") {
     "access_token:libaccesstoken_sdk",
     "c_utils:utils",
     "drivers_interface_sensor:libsensor_proxy_1.0",
+    "drivers_peripheral_sensor:hdi_sensor",
     "hisysevent_native:libhisysevent",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
     "samgr:samgr_proxy",
   ]
+
   part_name = "medical_sensor"
   subsystem_name = "sensors"
 }

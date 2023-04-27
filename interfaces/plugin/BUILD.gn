@@ -11,26 +11,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import("//build/config/ohos/rules.gni")
 import("//build/ohos.gni")
+import("./../../medical_sensor.gni")
+
 ohos_shared_library("medical") {
   include_dirs = [
-    "//third_party/node/src",
-    "//native_engine",
-    "../native/include",
+    "$SUBSYSTEM_DIR/interfaces/native/include",
+    "$SUBSYSTEM_DIR/interfaces/plugin/include",
     "//third_party/libuv/include",
-    "//commonlibrary/c_utils/base/include",
-    "./include",
+    "//third_party/node/src",
   ]
   defines = [
     "APP_LOG_TAG = \"medicalJs\"",
     "LOG_DOMAIN = 0xD002701",
   ]
   sources = [
-    "./src/medical_js.cpp",
-    "./src/medical_napi_utils.cpp",
+    "src/medical_js.cpp",
+    "src/medical_napi_utils.cpp",
   ]
-  deps = [ "../native:medical_interface_native" ]
+  deps = [ "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native" ]
   external_deps = [
     "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
@@ -43,20 +42,20 @@ ohos_shared_library("medical") {
 
 ohos_static_library("medical_static") {
   include_dirs = [
-    "//third_party/node/src",
-    "../native/include",
+    "$SUBSYSTEM_DIR/interfaces/native/include",
+    "$SUBSYSTEM_DIR/interfaces/plugin/include",
     "//third_party/libuv/include",
-    "./include",
+    "//third_party/node/src",
   ]
   defines = [
     "APP_LOG_TAG = \"medicalJs\"",
     "LOG_DOMAIN = 0xD002701",
   ]
   sources = [
-    "./src/medical_js.cpp",
-    "./src/medical_napi_utils.cpp",
+    "src/medical_js.cpp",
+    "src/medical_napi_utils.cpp",
   ]
-  deps = [ "../native:medical_interface_native" ]
+  deps = [ "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native" ]
   external_deps = [
     "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",

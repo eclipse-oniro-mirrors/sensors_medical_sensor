@@ -12,10 +12,8 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
+import("./../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-
-##############################################
 ohos_ndk_library("libmedical_ndk") {
   output_name = "medical"
   ndk_description_file = "./libmedical.json"
@@ -27,26 +25,26 @@ ohos_shared_library("medical_interface_native") {
   sources = [ "src/medical_native_impl.cpp" ]
 
   include_dirs = [
-    "include",
-    "//commonlibrary/c_utils/base/include",
-    "//utils/system/safwk/native/include",
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor/include",
-    "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
-    "//foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
+
   deps = [
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor:libmedical_native",
     "$SUBSYSTEM_DIR/interfaces/native:libmedical_ndk",
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
   ]
+
   external_deps = [
     "c_utils:utils",
     "eventhandler:libeventhandler",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr:samgr_proxy",
   ]
+
   part_name = "medical_sensor"
   subsystem_name = "sensors"
 }

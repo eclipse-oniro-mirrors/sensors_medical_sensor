@@ -12,23 +12,18 @@
 # limitations under the License.
 
 import("//build/test.gni")
+import("./../../../../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-module_output_path = "sensors/medical_sensor/services/medical_sensor"
-
-###########################MedicalProxyTest###########################
 ohos_unittest("MedicalProxyTest") {
-  module_out_path = module_output_path
+  module_out_path = "sensors/medical_sensor/services/medical_sensor"
 
-  sources = [ "./medical_proxy_test.cpp" ]
+  sources = [ "medical_proxy_test.cpp" ]
 
   include_dirs = [
-    "//commonlibrary/c_utils/base/include",
-    "//utils/system/safwk/native/include",
-    "$SUBSYSTEM_DIR/utils/include",
-    "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/frameworks/native/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
 
   deps = [
@@ -47,7 +42,6 @@ ohos_unittest("MedicalProxyTest") {
   ]
 }
 
-###########################end###########################
 group("unittest") {
   testonly = true
   deps = [ ":MedicalProxyTest" ]

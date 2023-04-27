@@ -12,21 +12,17 @@
 # limitations under the License.
 
 import("//build/test.gni")
+import("./../../../../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-module_output_path = "sensors/medical_sensor/services/medical_sensor"
-
-###########################ClientInfoTest###########################
 ohos_unittest("ClientInfoCommonTest") {
-  module_out_path = module_output_path
+  module_out_path = "sensors/medical_sensor/services/medical_sensor"
 
-  sources = [ "./client_info_test.cpp" ]
+  sources = [ "client_info_test.cpp" ]
 
   include_dirs = [
-    "//commonlibrary/c_utils/base/include",
-    "$SUBSYSTEM_DIR/utils/include",
-    "$SUBSYSTEM_DIR/services/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
 
   deps = [
@@ -35,6 +31,7 @@ ohos_unittest("ClientInfoCommonTest") {
     "//third_party/googletest:gmock_main",
     "//third_party/googletest:gtest_main",
   ]
+
   external_deps = [
     "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
@@ -42,7 +39,6 @@ ohos_unittest("ClientInfoCommonTest") {
   ]
 }
 
-###########################end###########################
 group("unittest") {
   testonly = true
   deps = [ ":ClientInfoCommonTest" ]
