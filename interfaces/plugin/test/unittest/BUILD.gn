@@ -42,10 +42,9 @@ ohos_unittest("MedicalJsTest") {
 
   external_deps = [
     "c_utils:utils",
+    "ets_runtime:libark_jsruntime",
     "hiviewdfx_hilog_native:libhilog",
     "napi:ace_napi",
-    "napi/:ace_napi_ark"
-    "ets_runtime:libark_jsruntime"
   ]
 
   relative_install_dir = "module"
