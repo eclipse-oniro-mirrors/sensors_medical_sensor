@@ -11,52 +11,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import("//build/config/ohos/rules.gni")
 import("//build/ohos.gni")
 import("//build/test.gni")
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-module_output_path = "sensors/medical_sensor/interfaces"
+import("./../../../../medical_sensor.gni")
+
 ohos_unittest("MedicalJsTest") {
-  module_out_path = module_output_path
-  configs = [ "//arkcompiler/ets_runtime:ark_jsruntime_public_config" ]
+  module_out_path = "sensors/medical_sensor/interfaces"
 
   include_dirs = [
-    "//third_party/node/src",
-    "//native_engine",
     "$SUBSYSTEM_DIR/interfaces/native/include",
     "$SUBSYSTEM_DIR/interfaces/plugin/include",
-    "//commonlibrary/c_utils/base/include",
-    "./include",
     "//third_party/libuv/include",
-    "//foundation/arkui/napi",
-    "//foundation/arkui/napi/interfaces/kits",
-    "//foundation/arkui/napi/native_engine",
-    "//foundation/arkui/napi/native_engine/impl/ark",
-    "//arkcompiler/ets_runtime",
+    "//third_party/node/src",
   ]
+
   defines = [
     "APP_LOG_TAG = \"medicalJs\"",
     "LOG_DOMAIN = 0xD002700",
   ]
+
   sources = [ "medical_js_test.cpp" ]
+
   deps = [
     "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native",
     "$SUBSYSTEM_DIR/interfaces/plugin:medical_static",
-    "//arkcompiler/ets_runtime:libark_jsruntime",
-    "//foundation/arkui/napi:ace_napi",
-    "//foundation/arkui/napi/:ace_napi_ark",
     "//third_party/googletest:gtest",
     "//third_party/googletest:gtest_main",
     "//third_party/libuv:uv",
   ]
+
   external_deps = [
     "c_utils:utils",
+    "ets_runtime:libark_jsruntime",
     "hiviewdfx_hilog_native:libhilog",
+    "napi:ace_napi",
   ]
+
   relative_install_dir = "module"
   part_name = "medical_sensor"
   subsystem_name = "sensors"
 }
+
 group("unittest") {
   testonly = true
   deps = [ ":MedicalJsTest" ]

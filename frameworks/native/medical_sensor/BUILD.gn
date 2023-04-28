@@ -12,10 +12,8 @@
 # limitations under the License.
 
 import("//build/ohos.gni")
+import("./../../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-
-##############################################
 ohos_shared_library("libmedical_native") {
   sources = [
     "src/medical_client_stub.cpp",
@@ -27,14 +25,12 @@ ohos_shared_library("libmedical_native") {
   ]
 
   include_dirs = [
-    "include",
-    "//commonlibrary/c_utils/base/include",
-    "//utils/system/safwk/native/include",
-    "$SUBSYSTEM_DIR/utils/include",
-    "$SUBSYSTEM_DIR/services/medical_sensor/include",
+    "$SUBSYSTEM_DIR/frameworks/native/medical_sensor/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
-    "//foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include",
+    "$SUBSYSTEM_DIR/services/medical_sensor/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
+
   deps = [
     "$SUBSYSTEM_DIR/services/medical_sensor:libmedical_service",
     "$SUBSYSTEM_DIR/utils:libmedical_utils",
@@ -53,7 +49,6 @@ ohos_shared_library("libmedical_native") {
   subsystem_name = "sensors"
 }
 
-##############################################
 group("medical_native_target") {
   deps = [ ":libmedical_native" ]
 }

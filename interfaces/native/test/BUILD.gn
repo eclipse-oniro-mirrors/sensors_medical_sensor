@@ -12,20 +12,16 @@
 # limitations under the License.
 
 import("//build/test.gni")
+import("./../../../medical_sensor.gni")
 
-SUBSYSTEM_DIR = "//base/sensors/medical_sensor"
-module_output_path = "sensors/medical_sensor/interfaces"
-
-###########################MedicalNativeTest###########################
 ohos_unittest("MedicalNativeTest") {
-  module_out_path = module_output_path
+  module_out_path = "sensors/medical_sensor/interfaces"
 
   sources = [ "unittest/medical_native_test.cpp" ]
 
   include_dirs = [
-    "//commonlibrary/c_utils/base/include",
-    "$SUBSYSTEM_DIR/utils/include",
     "$SUBSYSTEM_DIR/interfaces/native/include",
+    "$SUBSYSTEM_DIR/utils/include",
   ]
 
   deps = [
@@ -34,16 +30,14 @@ ohos_unittest("MedicalNativeTest") {
     "//third_party/googletest:gmock_main",
     "//third_party/googletest:gtest_main",
   ]
+
   external_deps = [
     "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
-
-    #"communication_L2:ipc_core",
     "ipc:ipc_core",
   ]
 }
 
-###########################end###########################
 group("unittest") {
   testonly = true
   deps = [ ":MedicalNativeTest" ]
