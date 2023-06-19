@@ -32,7 +32,7 @@ ohos_shared_library("medical") {
   deps = [ "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native" ]
   external_deps = [
     "c_utils:utils",
-    "hiviewdfx_hilog_native:libhilog",
+    "hilog:libhilog",
     "napi:ace_napi",
   ]
   relative_install_dir = "module"
@@ -58,7 +58,7 @@ ohos_static_library("medical_static") {
   deps = [ "$SUBSYSTEM_DIR/interfaces/native:medical_interface_native" ]
   external_deps = [
     "c_utils:utils",
-    "hiviewdfx_hilog_native:libhilog",
+    "hilog:libhilog",
     "napi:ace_napi",
   ]
   part_name = "medical_sensor"
