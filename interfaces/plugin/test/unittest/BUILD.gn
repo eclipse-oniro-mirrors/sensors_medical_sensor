@@ -43,7 +43,7 @@ ohos_unittest("MedicalJsTest") {
   external_deps = [
     "c_utils:utils",
     "ets_runtime:libark_jsruntime",
-    "hiviewdfx_hilog_native:libhilog",
+    "hilog:libhilog",
     "napi:ace_napi",
   ]
 

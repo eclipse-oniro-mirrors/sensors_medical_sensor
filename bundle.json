@@ -9,21 +9,21 @@
   "component": {
     "name": "medical_sensor",
     "subsystem": "sensors",
-    "syscap": ["SystemCapability.Sensors.Medical.Sensor"],
+    "syscap": ["SystemCapability.Sensors.Medical_sensor"],
     "features": [],
     "adapted_system_type": [ "standard" ],
     "rom": "2048KB",
     "ram": "~4096KB",
     "deps": {
       "components": [
-        "hiviewdfx_hilog_native",
+        "hilog",
         "ipc",
         "safwk",
         "samgr",
         "utils_base",
         "appexecfwk_standard",
         "napi",
-        "hisysevent_native",
+        "hisysevent",
         "drivers_peripheral_sensor"
       ],
       "third_party": []
