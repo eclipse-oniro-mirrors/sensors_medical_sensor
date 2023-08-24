@@ -113,7 +113,7 @@ void EmitAsyncCallbackWork(AsyncCallbackInfo *asyncCallbackInfo)
             HiLog::Debug(LABEL, "%{public}s napi_create_async_work left", __func__);
         },
         asyncCallbackInfo, &asyncCallbackInfo->asyncWork);
-    napi_queue_async_work(asyncCallbackInfo->env, asyncCallbackInfo->asyncWork);
+    napi_queue_async_work_with_qos(asyncCallbackInfo->env, asyncCallbackInfo->asyncWork, napi_qos_default);
     HiLog::Debug(LABEL, "%{public}s end", __func__);
 }
 
@@ -133,7 +133,7 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
     }
 
     work->data = reinterpret_cast<void *>(asyncCallbackInfo);
-    uv_queue_work(loop, work, [] (uv_work_t *work) {}, [] (uv_work_t *work, int status) {
+    uv_queue_work_with_qos(loop, work, [] (uv_work_t *work) {}, [] (uv_work_t *work, int status) {
         AsyncCallbackInfo *asyncCallbackInfo = reinterpret_cast<AsyncCallbackInfo *>(work->data);
         if (asyncCallbackInfo == nullptr) {
             HiLog::Error(LABEL, "%{public}s asyncCallbackInfo is null", __func__);
@@ -174,5 +174,5 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
 
         delete work;
         work = nullptr;
-    });
+    }, uv_qos_default);
 }
