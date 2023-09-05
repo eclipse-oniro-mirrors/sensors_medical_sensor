@@ -16,15 +16,18 @@
     "ram": "~4096KB",
     "deps": {
       "components": [
+        "access_token",
+        "c_utils",
+        "drivers_interface_sensor",
+        "drivers_peripheral_sensor",
+        "eventhandler",
+        "ets_runtime",
         "hilog",
-        "ipc",
-        "safwk",
-        "samgr",
-        "utils_base",
-        "appexecfwk_standard",
-        "napi",
         "hisysevent",
-        "drivers_peripheral_sensor"
+        "napi",
+        "ipc",
+        "samgr",
+        "safwk"
       ],
       "third_party": []
     },
