@@ -96,7 +96,8 @@ int32_t MedicalSensorDataChannel::InnerSensorDataChannel()
     }
 
     int32_t receiveFd = GetReceiveDataFd();
-    auto inResult = handler->AddFileDescriptorListener(receiveFd, AppExecFwk::FILE_DESCRIPTOR_INPUT_EVENT, listener);
+    auto inResult = handler->AddFileDescriptorListener(receiveFd, AppExecFwk::FILE_DESCRIPTOR_INPUT_EVENT, listener,
+        "MedicalSensorTask");
     if (inResult != 0) {
         HiLog::Error(LABEL, "%{public}s AddFileDescriptorListener fail", __func__);
         return -1;
