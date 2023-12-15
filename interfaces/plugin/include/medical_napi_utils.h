@@ -23,6 +23,8 @@
 
 #include "medical_native_impl.h"
 
+namespace OHOS {
+namespace Sensors {
 #define EVENT_INVALID_PARAMETER (-1)
 #define EVENT_OK 0
 #define MAX_DATA_LEN 128
@@ -40,9 +42,11 @@ bool IsMatchType(napi_value value, napi_valuetype type, napi_env env);
 napi_value GetNapiInt32(int32_t number, napi_env env);
 int32_t GetCppInt32(napi_value value, napi_env env);
 bool GetCppBool(napi_value value, napi_env env);
-void EmitAsyncCallbackWork(AsyncCallbackInfo *async_callback_info);
-void EmitUvEventLoop(AsyncCallbackInfo *async_callback_info);
+void EmitAsyncCallbackWork(AsyncCallbackInfo *asyncCallbackInfo);
+void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo);
 int64_t GetCppInt64(napi_value value, napi_env env);
 napi_value NapiGetNamedProperty(napi_value jsonObject, std::string name, napi_env env);
 napi_value GetUndefined(napi_env env);
+}  // namespace Sensors
+}  // namespace OHOS
 #endif // MEDICAL_SENSOR_NAPI_UTILS_H

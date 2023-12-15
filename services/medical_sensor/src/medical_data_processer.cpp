@@ -239,7 +239,7 @@ void MedicalSensorDataProcesser::SendRawData(std::unordered_map<uint32_t, struct
     size_t eventSize = event.size();
     std::vector<struct TransferMedicalSensorEvents> transferEvents;
     for (int32_t i = 0; i < (int32_t)eventSize; i++) {
-        struct TransferMedicalSensorEvents  transferEvent = {
+        TransferMedicalSensorEvents  transferEvent = {
             .sensorTypeId = event[i].sensorTypeId,
             .version = event[i].version,
             .timestamp = event[i].timestamp,

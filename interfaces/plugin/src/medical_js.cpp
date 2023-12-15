@@ -32,6 +32,8 @@
 #include "refbase.h"
 #include "securec.h"
 
+namespace OHOS {
+namespace Sensors {
 using namespace OHOS::HiviewDFX;
 static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002786, "AfeJsAPI"};
 
@@ -53,7 +55,7 @@ static void DataCallbackImpl(SensorEvent *event)
         HiLog::Debug(LABEL, "%{public}s no subscribe to the sensor data on", __func__);
         return;
     }
-    struct AsyncCallbackInfo *onCallbackInfo = g_onCallbackInfos[sensorTypeId];
+    AsyncCallbackInfo *onCallbackInfo = g_onCallbackInfos[sensorTypeId];
     onCallbackInfo->sensorTypeId = sensorTypeId;
     onCallbackInfo->sensorDataLength = dataLen / sizeof(uint32_t);
     if (memcpy_s(onCallbackInfo->sensorData, dataLen, data, dataLen) != EOK) {
@@ -61,7 +63,7 @@ static void DataCallbackImpl(SensorEvent *event)
         return;
     }
 
-    EmitUvEventLoop((struct AsyncCallbackInfo *)(onCallbackInfo));
+    EmitUvEventLoop(static_cast <AsyncCallbackInfo *> (onCallbackInfo));
     HiLog::Info(LABEL, "%{public}s end", __func__);
 }
 
@@ -291,3 +293,5 @@ extern "C" __attribute__((constructor)) void RegisterModule(void)
 {
     napi_module_register(&_module);
 }
+}  // namespace Sensors
+}  // namespace OHOS
