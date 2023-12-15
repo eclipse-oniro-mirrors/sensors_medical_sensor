@@ -197,7 +197,7 @@ void MedicalSensorService::ReportOnChangeData(uint32_t sensorId)
         HiLog::Warn(LABEL, "%{public}s it is not onchange data, no need to report", __func__);
         return;
     }
-    struct SensorEvent event;
+    SensorEvent event;
     auto ret = clientInfo_.GetStoreEvent(sensorId, event);
     if (ret != ERR_OK) {
         HiLog::Error(LABEL, "%{public}s there is no data to be reported", __func__);

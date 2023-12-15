@@ -129,7 +129,7 @@ int32_t CompatibleConnection::SensorDataCallback(const struct SensorEvents *even
         return ERR_NO_INIT;
     }
 
-    struct SensorEvent sensorEvent = {
+    SensorEvent sensorEvent = {
         .sensorTypeId = event->sensorId,
         .version = event->version,
         .timestamp = event->timestamp,

@@ -57,7 +57,7 @@ ErrCode FlushInfoRecord::SetFlushInfo(uint32_t sensorId,
         HiLog::Error(LABEL, "%{public}s failed, channel cannot be null", __func__);
         return INVALID_POINTER;
     }
-    struct FlushInfo flush(channel, isFirstFlush);
+    FlushInfo flush(channel, isFirstFlush);
     std::lock_guard<std::mutex> flushLock(flushInfoMutex_);
     /* If the sensorId can be found, it indicates that other processes have flushed on this sensor,
     so need to insert this flush command to the end of the vector */
