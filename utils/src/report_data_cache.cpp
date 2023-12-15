@@ -57,7 +57,7 @@ int32_t ReportDataCache::CacheData(const struct SensorEvent* event, sptr<ReportD
         HiLog::Error(LABEL, "%{public}s callback or circularBuf or event cannot be null", __func__);
         return ERROR;
     }
-    struct SensorEvent  eventCopy = {
+    SensorEvent  eventCopy = {
         .sensorTypeId = event->sensorTypeId,
         .version = event->version,
         .timestamp = event->timestamp,
