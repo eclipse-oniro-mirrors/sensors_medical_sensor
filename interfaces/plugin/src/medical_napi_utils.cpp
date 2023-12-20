@@ -178,5 +178,5 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
         work = nullptr;
     }, uv_qos_default);
 }
-}  // namespace Sensors
-}  // namespace OHOS
+} // namespace Sensors
+} // namespace OHOS

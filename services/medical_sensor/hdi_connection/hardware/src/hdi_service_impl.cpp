@@ -32,10 +32,10 @@ std::vector<SensorInformation> g_sensorInfos = {
     {"sensor_test", "default", "1.0.0", "1.0.0", 0, 0, 9999.0, 0.000001, 23.0},
 };
 std::vector<int32_t> supportSensors = {0};
-float g_testData[] = {9.8};
+float g_testData[] = {9.8F};
 SensorEvents testEvent = {
     .sensorId = 0,
-    .data = (uint8_t *)g_testData,
+    .data = static_cast<uint8_t *>(g_testData),
     .dataLen = 4
 };
 }

@@ -47,6 +47,6 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo);
 int64_t GetCppInt64(napi_value value, napi_env env);
 napi_value NapiGetNamedProperty(napi_value jsonObject, std::string name, napi_env env);
 napi_value GetUndefined(napi_env env);
-}  // namespace Sensors
-}  // namespace OHOS
+} // namespace Sensors
+} // namespace OHOS
 #endif // MEDICAL_SENSOR_NAPI_UTILS_H

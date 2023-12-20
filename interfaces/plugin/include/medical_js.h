@@ -22,6 +22,6 @@ namespace Sensors {
 static int32_t UnsubscribeSensor(int32_t sensorTypeId);
 static void DataCallbackImpl(SensorEvent *event);
 static int32_t SubscribeSensor(int32_t sensorTypeId, int64_t interval, const MedicalSensorUser *user);
-}  // namespace Sensors
-}  // namespace OHOS
+} // namespace Sensors
+} // namespace OHOS
 #endif // MEDICAL_SENSOR_JS_H
