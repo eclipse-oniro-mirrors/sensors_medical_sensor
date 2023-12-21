@@ -176,7 +176,7 @@ ErrCode MedicalSensorManager::AfterDisableSensor(uint32_t sensorId)
         return CLEAR_SENSOR_INFO_ERR;
     }
     if (sensorId == PROXIMITY_SENSOR_ID) {
-        struct SensorEvent event;
+        SensorEvent event;
         auto ret = clientInfo_.GetStoreEvent(sensorId, event);
         if (ret == ERR_OK) {
             HiLog::Debug(LABEL, "%{public}s change the default state is far", __func__);

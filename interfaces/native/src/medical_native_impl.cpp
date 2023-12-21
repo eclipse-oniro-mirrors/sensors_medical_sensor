@@ -44,7 +44,7 @@ static void HandleSensorData(struct SensorEvent *events, int32_t num, void *data
         HiLog::Error(LABEL, "%{public}s events is null or num is invalid", __func__);
         return;
     }
-    struct SensorEvent eventStream;
+    SensorEvent eventStream;
     for (int32_t i = 0; i < num; ++i) {
         eventStream = events[i];
         if (eventStream.data == nullptr || g_subscribeMap[eventStream.sensorTypeId] == nullptr) {

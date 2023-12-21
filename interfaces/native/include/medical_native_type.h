@@ -156,10 +156,10 @@ typedef enum SensorMode {
  */
 typedef struct PpgData {
     uint32_t reserve : 2;
-    uint32_t adc_data : 22;
+    uint32_t adcData : 22;
     uint32_t tl : 2;
     uint32_t rx : 2;
-    uint32_t phase_group : 4;
+    uint32_t phaseGroup : 4;
 } PpgData;
 
 
