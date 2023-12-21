@@ -22,6 +22,8 @@
 
 #include "hilog/log.h"
 
+namespace OHOS {
+namespace Sensors {
 using namespace OHOS::HiviewDFX;
 static constexpr HiLogLabel LABEL = {LOG_CORE, 0xD002786, "AfeJsAPI"};
 bool IsMatchType(napi_value value, napi_valuetype type, napi_env env)
@@ -176,3 +178,5 @@ void EmitUvEventLoop(AsyncCallbackInfo *asyncCallbackInfo)
         work = nullptr;
     });
 }
+} // namespace Sensors
+} // namespace OHOS

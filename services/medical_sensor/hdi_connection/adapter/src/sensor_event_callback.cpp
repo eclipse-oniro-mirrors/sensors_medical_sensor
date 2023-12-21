@@ -30,7 +30,7 @@ std::unique_ptr<HdiConnection> HdiConnection_ = std::make_unique<HdiConnection>(
 int32_t SensorEventCallback::OnDataEvent(const HdfSensorEvents& event)
 {
     HiLog::Debug(LABEL, "%{public}s begin", __func__);
-    struct SensorEvent sensorEvent = {
+    SensorEvent sensorEvent = {
         .sensorTypeId = event.sensorId,
         .version = event.version,
         .timestamp = event.timestamp,

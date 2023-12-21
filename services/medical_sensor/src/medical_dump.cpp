@@ -144,7 +144,7 @@ bool MedicalSensorDump::DumpSensorData(int32_t fd, ClientInfo &clientInfo, const
             auto data = sensorData.second.front();
             sensorData.second.pop();
             timespec time = { 0, 0 };
-            struct tm *timeinfo = localtime(&(time.tv_sec));
+            tm *timeinfo = localtime(&(time.tv_sec));
             if (timeinfo == nullptr) {
                 HiLog::Error(LABEL, "%{public}s timeinfo cannot be null", __func__);
                 return false;
@@ -161,7 +161,7 @@ void MedicalSensorDump::DumpCurrentTime(int32_t fd)
 {
     timespec curTime = { 0, 0 };
     clock_gettime(CLOCK_REALTIME, &curTime);
-    struct tm *timeinfo = localtime(&(curTime.tv_sec));
+    tm *timeinfo = localtime(&(curTime.tv_sec));
     if (timeinfo == nullptr) {
         HiLog::Error(LABEL, "%{public}s timeinfo cannot be null", __func__);
         return;

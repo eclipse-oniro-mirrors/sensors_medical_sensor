@@ -466,7 +466,7 @@ int32_t ClientInfo::GetStoreEvent(int32_t sensorId, struct SensorEvent &event)
 void ClientInfo::StoreEvent(const struct SensorEvent &event)
 {
     bool foundSensor = false;
-    struct SensorEvent storedEvent;
+    SensorEvent storedEvent;
     auto sensorHdiConnection = &SensorHdiConnection::GetInstance();
     if (sensorHdiConnection == nullptr) {
         HiLog::Error(LABEL, "%{public}s sensorHdiConnection cannot be null", __func__);
