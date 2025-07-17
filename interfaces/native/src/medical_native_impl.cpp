@@ -69,6 +69,10 @@ static int32_t CreateSensorDataChannel()
     }
     if (g_dataChannel == nullptr) {
         g_dataChannel = new (std::nothrow) MedicalSensorDataChannel();
+        if (g_dataChannel == nullptr) {
+            HiLog::Error(LABEL, "%{public}s g_dataChannel is null", __func__);
+            return OHOS::Sensors::ERROR;
+        }
     }
     auto ret = g_dataChannel->CreateSensorDataChannel(HandleSensorData, nullptr);
     if (ret != SUCCESS) {
