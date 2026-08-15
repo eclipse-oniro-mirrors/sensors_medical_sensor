@@ -34,6 +34,7 @@ const std::string READ_HEALTH_DATA_PERMISSION = "ohos.permission.READ_HEALTH_DAT
 
 std::unordered_map<uint32_t, std::string> PermissionUtil::sensorPermissions_ = {
     { TYPE_ID_PHOTOPLETHYSMOGRAPH, READ_HEALTH_DATA_PERMISSION },
+    { TYPE_ID_ELECTROCARDIOGRAPH, READ_HEALTH_DATA_PERMISSION },
     { TYPE_ID_HEART_RATE, READ_HEALTH_DATA_PERMISSION }
 };
 
