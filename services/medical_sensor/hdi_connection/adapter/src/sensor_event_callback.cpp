@@ -17,6 +17,7 @@
 #include "hdi_connection.h"
 #include "medical_errors.h"
 #include "medical_log_domain.h"
+#include "securec.h"
 
 namespace OHOS {
 namespace Sensors {
@@ -35,13 +36,16 @@ int32_t SensorEventCallback::OnDataEvent(const HdfSensorEvents& event)
         .version = event.version,
         .timestamp = event.timestamp,
         .option = event.option,
-        .mode = event.mode,
-        .dataLen = event.dataLen
+        .mode = event.mode
     };
     sensorEvent.data = new uint8_t[SENSOR_DATA_LENGHT];
-    for (int32_t i = 0; i < static_cast<int32_t>(event.data.size()); i++) {
-        sensorEvent.data[i] = event.data[i];
+    if (memcpy_s(sensorEvent.data, SENSOR_DATA_LENGHT, event.data.data(),
+        event.data.size()) != EOK) {
+        HiLog::Error(LABEL, "%{public}s copy data failed", __func__);
+        delete[] sensorEvent.data;
+        return COPY_ERR;
     }
+    sensorEvent.dataLen = static_cast<uint32_t>(event.data.size());
     DataCacheFunc reportDataCb_ = HdiConnection_->getReportDataCb();
     sptr<ReportDataCache> reportDataCallback_ = HdiConnection_->getReportDataCallback();
     if (reportDataCb_ == nullptr || reportDataCallback_ == nullptr) {
